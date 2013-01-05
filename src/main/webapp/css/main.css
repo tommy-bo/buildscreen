@@ -1,0 +1,91 @@
+.mainDisplay { 
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.top-sticker {
+	z-index: 0;
+}
+
+#menu {
+	z-index: 1;
+	opacity: 0.4;
+	background: white;
+	border-radius: 0 0 0 1em;
+	right: 0;
+	top: 0;
+	position: absolute;
+	padding: 0.5em;
+  -webkit-transition: 2s;
+	transition: 2s;	
+}
+
+#menu:hover {
+	opacity: 1;
+  -webkit-transition: 2s;
+  transition: 2s;	
+}
+
+.head {
+	background: #1BD130;
+	height: 3.3em;
+}
+
+.head h1 {
+	margin: 0 0.2em;
+}
+
+.timestamp {
+	font-style: italic;
+}
+
+.failureContainer {
+	background: #EF2929;
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	overflow: hidden;
+	right: 0;
+	text-align: center;
+	top: 0;
+}
+
+.failureContainer ul {
+	list-style: none inside none;
+	padding: 0;
+}
+
+.failureContainer h1 {
+	font-size: 60pt;
+}
+
+#rotating-view-container {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 3.3em;
+}
+
+.pageView {
+	height: 100%;
+	width: 100%;
+	opacity: 0;
+	position: absolute;
+  -webkit-transition: opacity 5s linear;
+  transition: 5s;	
+}
+
+.pageView object {
+	height: 100%;
+	width: 100%;
+}
+
+.visible {
+	opacity: 1;
+  -webkit-transition: opacity 5s linear;
+  transition: 5s;	
+}
