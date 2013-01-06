@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import javax.servlet.ServletException;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.bind.JavaScriptMethod;
 
 public class ByggeskjermView extends RadiatorView {
 
@@ -30,6 +31,13 @@ public class ByggeskjermView extends RadiatorView {
 	@DataBoundConstructor
 	public ByggeskjermView(String name) {
 		super(name);
+	}
+	
+	@JavaScriptMethod
+	public BuildscreenUpdate updateStatus() {
+		BuildscreenUpdate update = new BuildscreenUpdate();
+		update.setStatusTime(getTimeSinceLastFailure());
+		return update;
 	}
 
 	public boolean isPlaySoundOnFail() {

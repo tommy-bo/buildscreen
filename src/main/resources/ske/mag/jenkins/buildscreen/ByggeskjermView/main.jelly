@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" 
 				 xmlns:st="jelly:stapler" 
 				 xmlns:d="jelly:define"
@@ -7,11 +8,12 @@
 				 xmlns:i="jelly:fmt">
 	<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
   <script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/rotator.js"/>
+  <script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/updater.js"/>
 	<div id="mainDisplay" class="mainDisplay">
 		<div class="head">
 			<div class="first-head">
 				<h1>
-					<span class="timestamp">${from.timeSinceLastFailure}</span> since last accident
+					<span class="timestamp" id="status">${from.timeSinceLastFailure}</span> since last accident
 				</h1>
 			</div>
 			<div id="menu">
@@ -36,6 +38,8 @@
 			<script>
 				document.observe("dom:loaded", function() {
 					new Rotator("pageView", "visible").rotatePages(120);
+					var buildscreenView = <st:bind value="${from}"/>
+					new StatusUpdater(buildscreenView).updateId("status").withField("statusTime").everySeconds(30);
 				});
 			</script>
 		</div>
