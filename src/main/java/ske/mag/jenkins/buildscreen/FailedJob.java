@@ -3,8 +3,10 @@ package ske.mag.jenkins.buildscreen;
 public class FailedJob {
 
 	private String name;
-	private String culprit;
+	private String culprits;
 	private String claim;
+	private boolean building;
+	private boolean queued;
 
 	public String getName() {
 		return name;
@@ -14,12 +16,12 @@ public class FailedJob {
 		this.name = name;
 	}
 
-	public String getCulprit() {
-		return culprit;
+	public String getCulprits() {
+		return culprits;
 	}
 
-	public void setCulprit(String culprit) {
-		this.culprit = culprit;
+	public void setCulprits(String culprits) {
+		this.culprits = culprits;
 	}
 
 	public String getClaim() {
@@ -32,5 +34,21 @@ public class FailedJob {
 	
 	public boolean isClaimed() {
 		return claim != null;
+	}
+
+	public boolean isBuilding() {
+		return building;
+	}
+
+	public void setBuilding(boolean building) {
+		this.building = building;
+	}
+
+	public boolean isQueued() {
+		return queued;
+	}
+
+	public void setQueued(boolean queued) {
+		this.queued = queued;
 	}
 }

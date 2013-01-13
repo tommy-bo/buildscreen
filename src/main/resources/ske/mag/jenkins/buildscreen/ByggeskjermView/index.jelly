@@ -10,6 +10,14 @@
 		<j:set var="status" value="${it.status}"/>
 		<l:header>
 			<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
+			<style>
+				.queued {
+					background: transparent url('${imagesURL}/progress-unknown-red.gif') repeat-x;
+				}
+				.building {
+					background: transparent url('${imagesURL}/progress-unknown.gif') repeat-x;
+				}
+			</style>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/buzz.js"/>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/pure_min.js"/>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/rotator.js"/>
@@ -21,7 +29,7 @@
 					new StatusUpdater(buildscreenView,
 														"${rootURL}/plugin/buildscreen/media/kids_cheer.wav",
 														"${rootURL}/plugin/buildscreen/media/siren.ogg")
-															.updateId("status").withField("statusTime").everySeconds(30);
+															.updateId("status").withField("statusTime").everySeconds(530);
 				});
 				window.buildScreenStatus = ${status.toJson()};
 			</script>
@@ -37,7 +45,7 @@
 				<div class="head">
 					<div class="timeSinceStatusChange">
 						<h1>
-							<span class="timestamp" id="status">${it.timeSinceLastFailure}</span> since last accident
+							<span class="timestamp" id="status">${status.statusTime}</span> since last accident
 						</h1>
 					</div>
 					<div id="menu">
@@ -61,31 +69,21 @@
 							</div>
 						</j:forEach>
 					</div>
-					<ul style="background: white; display: none;">
-						<j:forEach var="job" items="${it.contents.jobs}">
-							<li>
-								<h1>${job.name}</h1>
-								<div>Fail-count: ${job.failCount}</div>
-								<div>Building: ${job.building}</div>
-								<div>Queued: ${job.queued}</div>
-								<div>Broken: ${job.broken}</div>
-							</li>
-						</j:forEach>
-					</ul>
 
 					<div id="failedBuilds" class="failureContainer">
 						<ul id="failedJobsList">
-							<j:forEach var="job" items="${it.failedJobs}">
+							<j:forEach var="job" items="${status.failedJobs}">
 								<li>
-									<h2>${job.name}</h2>
-									<div class="culprits">
-										<j:forEach var="culprit" items="${job.culprits}" end="1">
-											${culprit}
-										</j:forEach>
-										<j:forEach var="culprit" items="${job.culprits}" begin="1">
-											, ${culprit}
-										</j:forEach>
-									</div>
+									<h2>
+										${job.name}
+										<j:if test="${job.queued}">
+											<div class="queued"/>
+										</j:if>
+										<j:if test="${job.building}">
+											<div class="building"/>
+										</j:if>
+									</h2>
+									<div class="culprits">${culprit}</div>
 									<j:if test="${job.claimed}">
 										<div class="claimedBy">${job.claims}</div>
 									</j:if>
