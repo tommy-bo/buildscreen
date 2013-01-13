@@ -1,0 +1,102 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" 
+				 xmlns:st="jelly:stapler" 
+				 xmlns:d="jelly:define"
+				 xmlns:l="/lib/layout" 
+				 xmlns:t="/lib/hudson" 
+				 xmlns:f="/lib/form"
+				 xmlns:i="jelly:fmt">
+	<l:layout norefresh="true" title="${it.displayName}">
+		<j:set var="status" value="${it.status}"/>
+		<l:header>
+			<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/buzz.js"/>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/pure_min.js"/>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/rotator.js"/>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/updater.js"/>
+			<script type="text/javascript">
+				document.observe("dom:loaded", function() {
+					new Rotator("pageView", "visible").rotatePages(120);
+					var buildscreenView = <st:bind value="${it}"/>
+					new StatusUpdater(buildscreenView,
+														"${rootURL}/plugin/buildscreen/media/kids_cheer.wav",
+														"${rootURL}/plugin/buildscreen/media/siren.ogg")
+															.updateId("status").withField("statusTime").everySeconds(30);
+				});
+				window.buildScreenStatus = ${status.toJson()};
+			</script>
+		</l:header>
+		<l:breadcrumb>
+			<a href="test">test</a>
+		</l:breadcrumb>
+		<l:side-panel>
+			<div>side-panel</div>
+		</l:side-panel>
+		<l:main-panel>
+			<div id="mainDisplay" class="mainDisplay ${status.status}">
+				<div class="head">
+					<div class="timeSinceStatusChange">
+						<h1>
+							<span class="timestamp" id="status">${it.timeSinceLastFailure}</span> since last accident
+						</h1>
+					</div>
+					<div id="menu">
+						<a href="configure" title="Edit view">
+							<img src="${imagesURL}/24x24/gear.png" alt="Gear"/>
+						</a>
+						<a href="delete" title="Delete view">
+							<img src="${imagesURL}/24x24/edit-delete.png" alt="Delete"/>
+						</a>
+					</div>
+				</div>
+				<div class="content">
+					<div id="rotating-view-container">
+						<j:forEach var="page" items="${it.pages}" indexVar="index">
+							<j:set var="styleClass" value="pageView"/>
+							<j:if test="${index == 0}">
+								<j:set var="styleClass" value="${styleClass} visible"/>
+							</j:if>
+							<div class="${styleClass}">
+								<object type="text/html" data="${page}">${%Content missing}</object>
+							</div>
+						</j:forEach>
+					</div>
+					<ul style="background: white; display: none;">
+						<j:forEach var="job" items="${it.contents.jobs}">
+							<li>
+								<h1>${job.name}</h1>
+								<div>Fail-count: ${job.failCount}</div>
+								<div>Building: ${job.building}</div>
+								<div>Queued: ${job.queued}</div>
+								<div>Broken: ${job.broken}</div>
+							</li>
+						</j:forEach>
+					</ul>
+
+					<div id="failedBuilds" class="failureContainer">
+						<ul id="failedJobsList">
+							<j:forEach var="job" items="${it.failedJobs}">
+								<li>
+									<h2>${job.name}</h2>
+									<div class="culprits">
+										<j:forEach var="culprit" items="${job.culprits}" end="1">
+											${culprit}
+										</j:forEach>
+										<j:forEach var="culprit" items="${job.culprits}" begin="1">
+											, ${culprit}
+										</j:forEach>
+									</div>
+									<j:if test="${job.claimed}">
+										<div class="claimedBy">${job.claims}</div>
+									</j:if>
+								</li>
+							</j:forEach>
+						</ul>
+						<img src="${rootURL}/plugin/buildscreen/images/img1.jpg"/>
+					</div>
+				</div>
+			</div>
+
+		</l:main-panel>
+	</l:layout>
+</j:jelly>

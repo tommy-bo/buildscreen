@@ -34,9 +34,15 @@ public class ByggeskjermView extends RadiatorView {
 	}
 	
 	@JavaScriptMethod
-	public BuildscreenUpdate updateStatus() {
-		BuildscreenUpdate update = new BuildscreenUpdate();
+	public BuildscreenStatus updateStatus() {
+		return getStatus();
+	}
+	
+	public BuildscreenStatus getStatus() {
+		BuildscreenStatus update = new BuildscreenStatus();
 		update.setStatusTime(getTimeSinceLastFailure());
+		update.setStatus(isBroken() ? "FAILED" : "SUCCESS");
+		update.setFailedJobs(FailedJobs.newFromViewEntries(getFailedJobs()));
 		return update;
 	}
 
