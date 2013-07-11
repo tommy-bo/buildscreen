@@ -1,0 +1,61 @@
+<!--
+ Edit View Page
+-->
+<j:jelly xmlns:j="jelly:core" 
+				 xmlns:st="jelly:stapler" 
+				 xmlns:d="jelly:define" 
+				 xmlns:l="/lib/layout" 
+				 xmlns:t="/lib/hudson" 
+				 xmlns:f="/lib/form" 
+				 xmlns:i="jelly:fmt">
+	<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
+<style>
+	.deleteButton {
+	border: none; 
+	background: url('${imagesURL}/24x24/edit-delete.png') transparent;
+}
+
+</style>
+	<f:entry title="${%Jobs}">
+		<j:forEach var="job" items="${app.items}">
+			<f:checkbox name="${job.name}" checked="${it.contains(job)}" />
+			${job.name}
+			<br/>
+		</j:forEach>
+	</f:entry>
+
+	<f:optionalBlock name="useincluderegex" title="${%Use a regular expression to include jobs into the view}"
+									 checked="${it.includeRegex != null}" help="/help/view-config/includeregex.html">
+		<f:entry title="${%Regular expression}">
+			<f:textbox name="includeRegex" field="includeRegex" />
+		</f:entry>
+	</f:optionalBlock>
+
+	<f:entry title="${%Play sound on fail?}" field="playSoundOnFail">
+		<f:checkbox name="playSoundOnFail" checked="${it.playSoundOnFail}" value="true" field="playSoundOnFail" />
+	</f:entry>
+
+	<f:entry title="${%Play sound on stable?}" field="playSoundOnStable">
+		<f:checkbox name="playSoundOnStable" checked="${it.playSoundOnStable}" value="true" field="playSoundOnStable" />
+	</f:entry>
+
+	<f:entry title="${%Loop through following pages}">
+		<br/>
+		<f:repeatable items="${it.pages}" add="${%Add page}" var="page">
+			<table>
+				<f:entry title="${%Page:}">
+					<table style="width: 100%;">
+						<tr>
+							<td>
+								<f:textbox name="page" value="${page}"/>
+							</td>
+							<td style="width: 24px;">
+								<f:repeatableDeleteButton/>
+							</td>
+						</tr>
+					</table>
+				</f:entry>
+			</table>
+		</f:repeatable>
+	</f:entry>
+</j:jelly>

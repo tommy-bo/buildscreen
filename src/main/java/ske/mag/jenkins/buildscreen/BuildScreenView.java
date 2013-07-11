@@ -1,36 +1,39 @@
 package ske.mag.jenkins.buildscreen;
 
 import hudson.Extension;
+import hudson.model.Api;
 import hudson.model.Descriptor;
-import hudson.model.IViewEntry;
-import hudson.model.RadiatorView;
+import hudson.model.ListView;
 import hudson.model.ViewDescriptor;
+import hudson.model.ViewGroup;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.TreeSet;
 import javax.servlet.ServletException;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
+import org.kohsuke.stapler.export.Exported;
+import org.kohsuke.stapler.export.ExportedBean;
 
-public class ByggeskjermView extends RadiatorView {
+@ExportedBean(defaultVisibility = 100)
+public class BuildScreenView extends ListView {
 
 	private boolean playSoundOnFail;
 	private boolean playSoundOnStable;
 	private List<String> pages;
 
 	@DataBoundConstructor
-	public ByggeskjermView(String name, boolean playSoundOnFail, boolean playSoundOnStable, List<String> pages) {
-		this(name);
+	public BuildScreenView(String name, boolean playSoundOnFail, boolean playSoundOnStable, List<String> pages, ViewGroup owner) {
+		super(name, owner);
 		this.playSoundOnFail = playSoundOnFail;
 		this.playSoundOnStable = playSoundOnStable;
 		this.pages = pages;
 	}
 
-	@DataBoundConstructor
-	public ByggeskjermView(String name) {
-		super(name);
+	@Override
+	public Api getApi() {
+		return new Api(this);
 	}
 	
 	@JavaScriptMethod
@@ -38,11 +41,15 @@ public class ByggeskjermView extends RadiatorView {
 		return getStatus();
 	}
 	
+	@Exported
+	public StatusApi getStatusApi() {
+		return new StatusApi(getStatus());
+	}
+
 	public BuildscreenStatus getStatus() {
 		BuildscreenStatus update = new BuildscreenStatus();
-		update.setStatusTime(getTimeSinceLastFailure());
-		update.setStatus(isBroken() ? "FAILED" : "SUCCESS");
-		update.setFailedJobs(FailedJobs.newFromViewEntries(getFailedJobs()));
+		update.setFailedJobs(FailedJobs.brokenBuilds(getBuilds()));
+		update.setUnstableJobs(FailedJobs.failedBuilds(getBuilds()));
 		return update;
 	}
 
@@ -71,19 +78,9 @@ public class ByggeskjermView extends RadiatorView {
 	}
 	
 	public void setPages(String[] pages) {
-		setPages(Arrays.asList(pages));
-	}
-	
-	public TreeSet<IViewEntry> getFailedJobs() {
-		return getContents().getFailingJobs();
-	}
-	
-	public boolean isBroken() {
-		return getContents().getBroken();
-	}
-	
-	public String getTimeSinceLastFailure() {
-		return getBuilds().failureOnly().getLastBuild().getTimestampString();
+		if(pages != null) {
+			setPages(Arrays.asList(pages));
+		}
 	}
 
 	@Override

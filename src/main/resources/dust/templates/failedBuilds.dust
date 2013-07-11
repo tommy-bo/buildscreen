@@ -1,0 +1,10 @@
+<ul id="failedJobsList" class="FAILED">
+	{# failedJobs}
+		{>job:./}
+	{/failedJobs}
+</ul>
+<ul id="unstableJobsList" class="UNSTABLE">
+	{# unstableJobs}
+		{>job:./}
+	{/unstableJobs}
+</ul>

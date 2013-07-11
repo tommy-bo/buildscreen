@@ -1,13 +1,22 @@
 package ske.mag.jenkins.buildscreen;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.kohsuke.stapler.export.Exported;
+import org.kohsuke.stapler.export.ExportedBean;
+
+@ExportedBean(defaultVisibility = 5)
 public class FailedJob {
 
 	private String name;
 	private String culprits;
-	private String claim;
+	private Claim claim;
 	private boolean building;
 	private boolean queued;
+	private Status buildStatus;
+	private Date lastSuccessfulBuildTime;
 
+	@Exported
 	public String getName() {
 		return name;
 	}
@@ -16,6 +25,7 @@ public class FailedJob {
 		this.name = name;
 	}
 
+	@Exported
 	public String getCulprits() {
 		return culprits;
 	}
@@ -24,18 +34,21 @@ public class FailedJob {
 		this.culprits = culprits;
 	}
 
-	public String getClaim() {
+	@Exported
+	public Claim getClaim() {
 		return claim;
 	}
 
-	public void setClaim(String claim) {
+	public void setClaim(Claim claim) {
 		this.claim = claim;
 	}
 	
+	@Exported
 	public boolean isClaimed() {
 		return claim != null;
 	}
 
+	@Exported
 	public boolean isBuilding() {
 		return building;
 	}
@@ -44,11 +57,85 @@ public class FailedJob {
 		this.building = building;
 	}
 
+	@Exported
 	public boolean isQueued() {
 		return queued;
 	}
 
 	public void setQueued(boolean queued) {
 		this.queued = queued;
+	}
+
+	@Exported
+	public Date getLastSuccessfulBuildTime() {
+		return lastSuccessfulBuildTime;
+	}
+
+	public void setLastSuccesfulBuildTime(Date lastSuccessfulBuildTime) {
+		this.lastSuccessfulBuildTime = lastSuccessfulBuildTime;
+	}
+	
+	@Exported
+	public String getLastSuccessfulBuildText() {
+		if(lastSuccessfulBuildTime == null) {
+			return "like forever";
+		}
+		return new SimpleDateFormat("hh:mm:ss dd.MM.yyyy").format(lastSuccessfulBuildTime);
+	}
+	
+	@Exported
+	public Status getBuildStatus() {
+		return buildStatus;
+	}
+
+	public void setBuildStatus(Status buildStatus) {
+		this.buildStatus = buildStatus;
+	}
+	
+	public static Builder ny() {
+		return new Builder();
+	}
+
+	public static class Builder {
+		private FailedJob template = new FailedJob();
+		
+		public Builder name(String name) {
+			template.setName(name);
+			return this;
+		}
+		
+		public Builder culprits(String culprits) {
+			template.setCulprits(culprits);
+			return this;
+		}
+		
+		public Builder claim(Claim claim) {
+			template.setClaim(claim);
+			return this;
+		}
+		
+		public Builder building(boolean building) {
+			template.setBuilding(building);
+			return this;
+		}
+		
+		public Builder queued(boolean queued) {
+			template.setQueued(queued);
+			return this;
+		}
+		
+		public Builder lastSuccessfulBuildTime(Date lastSuccessfulBuildTime) {
+			template.setLastSuccesfulBuildTime(lastSuccessfulBuildTime);
+			return this;
+		}
+		
+		public Builder buildStatus(Status status) {
+			template.setBuildStatus(status);
+			return this;
+		}
+		
+		public FailedJob bygg() {
+			return template;
+		}
 	}
 }

@@ -1,169 +1,257 @@
 #header {
-	display: none;
+  display: none;
 }
 
 #side-panel {
-	display: none;
+  display: none;
 }
 
 #footer {
-	display: none;
+  display: none;
 }
 
 body {
-	font-family: Sans-serif;
+  font-family: Sans-serif;
 }
 
-.mainDisplay { 
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-	overflow: hidden;
+#disconnectedOverlay {
+  background-color: #aaaaaa;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#disconnectedOverlay.disconnected {
+  -webkit-transition: 30s;
+  transition: 30s;
+  top: 0;
+  opacity: 0.7;
+}
+
+.mainDisplay {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  overflow: hidden;
 }
 
 .content {
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 10em;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 3.2em;
 }
 
 #menu {
-	z-index: 1;
-	opacity: 0.4;
-	background: white;
-	border-radius: 0 0 0 1em;
-	right: 0;
-	top: 0;
-	position: absolute;
-	padding: 0.5em;
+  z-index: 1;
+  opacity: 0.4;
+  background: white;
+  border-radius: 0 0 0 1em;
+  right: 0;
+  top: 0;
+  position: absolute;
+  padding: 0.5em;
   -webkit-transition: 2s;
-	transition: 2s;	
+  transition: 2s;
 }
 
 #menu:hover {
-	opacity: 1;
+  opacity: 1;
   -webkit-transition: 2s;
-  transition: 2s;	
+  transition: 2s;
 }
 
 .head {
-	background: #1BD130;
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 10em;
-	-webkit-transition: background 3s;
-	transition: background 3s;
+  background: #1BD130;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.2em;
+  -webkit-transition: background 3s;
+  transition: background 3s;
 }
 
 .FAILED .head {
-	background: #EF2929;
-	-webkit-transition: background 3s;
-	transition: background 3s;
+  background: #EF2929;
+  -webkit-transition: background 3s;
+  transition: background 3s;
 }
 
 .timeSinceStatusChange {
-	height: 100%;
-	padding: 0.4em 0 0;
-	text-align: center;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  height: 100%;
+  padding: 0.4em 0 0;
+  text-align: center;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 h1 {
-	margin: 0;
-	font-size: 60pt;
-	font-weight: normal;
+  margin: 0;
+  font-size: 19pt;
+  font-weight: normal;
 }
 
 h2 {
-	margin: 0;
-	font-size: 60pt;
-	font-weight: normal;
+  margin: 0;
+  font-size: 19pt;
+  font-weight: normal;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 60%;
+  margin: 0 auto;
+  border-radius: 1em;
+  overflow: hidden;
 }
 
 .head div {
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
 }
 
 .timestamp {
-	font-style: italic;
-	font-weight: bold;
+  font-style: italic;
+  font-weight: bold;
 }
 
 .failureContainer {
-	background: #EF2929;
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	overflow: hidden;
-	right: 0;
-	text-align: center;
-	height: 0;
-	-webkit-transition: height 3s;
-	transition: height 3s;
-	font-size: 42pt;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  overflow: hidden;
+  right: 0;
+  text-align: center;
+  height: 0;
+  -webkit-transition: height 3s;
+  transition: height 3s;
+  font-size: 21pt;
 }
-
-.FAILED .failureContainer {
-	height: 100%;
-	-webkit-transition: 3s;
-	transition: 3s;
-}
-
 .failureContainer ul {
-	list-style: none inside none;
-	padding: 0;
+  list-style: none inside none;
+  padding: 0;
+  margin: 0;
+}
+
+.FAILED .failureContainer, .UNSTABLE .failureContainer {
+  height: 100%;
+  -webkit-transition: 3s;
+  transition: 3s;
+}
+
+.FAILED .failureContainer, .failureContainer ul.FAILED {
+  background-color: #ef2929;
+}
+
+.UNSTABLE .failureContainer, .failureContainer ul.UNSTABLE {
+  background-color: #f57d1f;
+}
+
+.failureContainer ul.FAILED li:first-child {
+  background: -moz-linear-gradient(top, #771414, #ef2929);
+}
+
+.failureContainer ul.FAILED li:last-child {
+  background: -moz-linear-gradient(top, #ef2929, #f25324);
+}
+
+.failureContainer ul.UNSTABLE li:first-child {
+  background: -moz-linear-gradient(top, #f25324, #f57d1f);
+}
+
+.FAILED .failureContainer ul.UNSTABLE li:last-child {
+  background: -moz-linear-gradient(top, #f57d1f 90%, #ef2929);
 }
 
 .failureContainer li {
-	border-bottom: 1px dashed rgba(0,0,0,0.5);
+  padding-top: 0.2em;
+  position: relative;
 }
 
-.queues, .building {
-	width: 495px;
-	height: 8px;
-	margin-left: auto;
-	margin-right: auto;
+hr {
+  border: none;
+  border-bottom: 1px dashed;
+  color: black;
+  margin: 0;
 }
 
-.culprits {
+/*.FAILED:last-of-type {
+	background-color: blue;
+	}
+	
+	.UNSTABLE {
+	background-color: green;
+	}
+*/
+/*.UNSTABLE:last-of-type {
+	background-color: blue;
+}*/
+.FAILED h2 {
+  color: #ef2929;
+}
+
+.UNSTABLE h2 {
+  color: #FFFF00;
+}
+
+.FAILED.claimed h2 {
+  color: #ff6600;
+}
+
+.UNSTABLE.claimed h2 {
+  color: #cccc00;
+}
+
+.queued, .building {
+  width: 100%;
+  height: 8px;
+}
+
+.lastSuccess {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12pt;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .claimedBy {
-	display: block;
-	font-style: italic;
-}	
+  display: block;
+  font-size: 16pt;
+  font-style: italic;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
 
 #rotating-view-container {
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .pageView {
-	height: 100%;
-	width: 100%;
-	opacity: 0;
-	position: absolute;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  position: absolute;
   -webkit-transition: opacity 5s linear;
-  transition: 5s;	
+  transition: 5s;
+  display: none;
 }
 
 .pageView object {
-	height: 100%;
-	width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .visible {
-	opacity: 1;
+  opacity: 1;
   -webkit-transition: opacity 5s linear;
-  transition: 5s;	
+  transition: 5s;
+  display: block;
 }

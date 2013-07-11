@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>1.466</version><!-- which version of Jenkins is this plugin built against? -->
+		<version>1.519</version><!-- which version of Jenkins is this plugin built against? -->
 	</parent>
 
 	<groupId>ske.mag.jenkins</groupId>
@@ -24,6 +24,10 @@
 			<id>repo.jenkins-ci.org</id>
 			<url>http://repo.jenkins-ci.org/public/</url>
 		</repository>
+		<repository>
+			<id>dustjs-maven-plugin-mvn-repo</id>
+			<url>https://raw.github.com/DanMonroe/dustjs-maven-plugin/mvn-repo/</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -33,11 +37,75 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jenkins-ci.tools</groupId>
+				<artifactId>maven-hpi-plugin</artifactId>
+				<configuration>
+					<webApp>${project.build.directory}/${project.build.finalName}.hpi</webApp>
+					<port>8090</port>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jasig.maven</groupId>	
+				<artifactId>sass-maven-plugin</artifactId>
+				<version>1.0.2</version>
+				<configuration>
+					<baseOutputDirectory>src/main/webapp</baseOutputDirectory>
+					<relativeOutputDirectory>../css</relativeOutputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generate-css</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>update-stylesheets</goal>	
+						</goals>
+					</execution>	
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.altair.common.dust</groupId>
+				<artifactId>dust-maven-plugin</artifactId>
+				<version>1.2.3-SNAPSHOT</version>
+				<configuration>
+					<sourceDirectory>src/main/resources/dust/templates</sourceDirectory>
+					<outputDirectory>src/main/webapp/js/templates</outputDirectory>
+					<!--<outputDirectory>${project.build.directory}/${project.artifactId}/js/templates</outputDirectory>-->
+					<includes>
+						<include>**/*.dust</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
-			<artifactId>radiatorviewplugin</artifactId>
-			<version>1.12</version>
+			<artifactId>claim</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<artifactId>guava</artifactId>
+			<groupId>com.google.guava</groupId>
+			<type>jar</type>
+			<version>11.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert-core</artifactId>
+			<version>2.0M10</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

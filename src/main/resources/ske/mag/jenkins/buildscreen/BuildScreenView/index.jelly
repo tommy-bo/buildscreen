@@ -12,26 +12,25 @@
 			<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
 			<style>
 				.queued {
-					background: transparent url('${imagesURL}/progress-unknown-red.gif') repeat-x;
+					background: transparent url('${rootURL}/plugin/buildscreen/images/progress-queued-yellow-rev.gif') repeat-x;
 				}
 				.building {
 					background: transparent url('${imagesURL}/progress-unknown.gif') repeat-x;
 				}
 			</style>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/dust-full-1.2.3.js"></script>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/templates/failedBuilds.dust"></script>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/templates/job.dust"></script>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/buzz.js"/>
-			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/pure_min.js"/>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/rotator.js"/>
-			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/updater.js"/>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/buildScreenUpdater.js"/>
 			<script type="text/javascript">
 				document.observe("dom:loaded", function() {
 					new Rotator("pageView", "visible").rotatePages(120);
-					var buildscreenView = <st:bind value="${it}"/>
-					new StatusUpdater(buildscreenView,
-														"${rootURL}/plugin/buildscreen/media/kids_cheer.wav",
-														"${rootURL}/plugin/buildscreen/media/siren.ogg")
-															.updateId("status").withField("statusTime").everySeconds(530);
+					new BuildScreenUpdater("${rootURL}/plugin/buildscreen/media/kids_cheer.wav",
+														"${rootURL}/plugin/buildscreen/media/siren.ogg").everySeconds(10);
+					new ViewUpdater(${status.toJson()}).updateStatus();
 				});
-				window.buildScreenStatus = ${status.toJson()};
 			</script>
 		</l:header>
 		<l:breadcrumb>
@@ -45,7 +44,8 @@
 				<div class="head">
 					<div class="timeSinceStatusChange">
 						<h1>
-							<span class="timestamp" id="status">${status.statusTime}</span> since last accident
+							<!--<span class="timestamp" id="status">${status.statusTime}</span> since last accident-->
+							Jenkins is OK
 						</h1>
 					</div>
 					<div id="menu">
@@ -71,30 +71,10 @@
 					</div>
 
 					<div id="failedBuilds" class="failureContainer">
-						<ul id="failedJobsList">
-							<j:forEach var="job" items="${status.failedJobs}">
-								<li>
-									<h2>
-										${job.name}
-										<j:if test="${job.queued}">
-											<div class="queued"/>
-										</j:if>
-										<j:if test="${job.building}">
-											<div class="building"/>
-										</j:if>
-									</h2>
-									<div class="culprits">${culprit}</div>
-									<j:if test="${job.claimed}">
-										<div class="claimedBy">${job.claims}</div>
-									</j:if>
-								</li>
-							</j:forEach>
-						</ul>
-						<img src="${rootURL}/plugin/buildscreen/images/img1.jpg"/>
 					</div>
 				</div>
+				<div id="disconnectedOverlay"></div>
 			</div>
-
 		</l:main-panel>
 	</l:layout>
 </j:jelly>

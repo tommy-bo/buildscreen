@@ -1,37 +1,36 @@
 package ske.mag.jenkins.buildscreen;
 
-import hudson.model.IViewEntry;
 import java.util.List;
-import java.util.TreeSet;
 import net.sf.json.JSONObject;
+import org.kohsuke.stapler.export.Exported;
+import org.kohsuke.stapler.export.ExportedBean;
 
+@ExportedBean(defaultVisibility = 5)
 public class BuildscreenStatus {
-	private String statusTime;
-	private String status;
 	private List<FailedJob> failedJobs;
+	private List<FailedJob> unstableJobs;
 
-	public String getStatusTime() {
-		return statusTime;
+	@Exported
+	public Status getStatus() {
+		return failedJobs.isEmpty() ? unstableJobs.isEmpty() ? Status.STABLE : Status.UNSTABLE : Status.FAILED;
 	}
 
-	public void setStatusTime(String statusTime) {
-		this.statusTime = statusTime;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
+	@Exported
 	public List<FailedJob> getFailedJobs() {
 		return failedJobs;
 	}
 
 	public void setFailedJobs(List<FailedJob> failedJobs) {
 		this.failedJobs = failedJobs;
+	}
+
+	@Exported
+	public List<FailedJob> getUnstableJobs() {
+		return unstableJobs;
+	}
+
+	public void setUnstableJobs(List<FailedJob> unstableJobs) {
+		this.unstableJobs = unstableJobs;
 	}
 
 	public JSONObject toJson() {

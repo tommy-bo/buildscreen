@@ -1,0 +1,19 @@
+	<li{?claimed} class="claimed"{/claimed}>
+		<h2>
+			{name}
+			{?queued}
+				<div class="queued"/>
+			{/queued}
+			{?building}
+				<div class="building"/>
+			{/building}
+		</h2>
+		<div class="lastSuccess">Since {lastSuccessfulBuildText}</div>
+		{?culprits}
+			<div class="culprits">Culprits: {culprits}</div>
+		{/culprits}
+		{?claimed}
+			<div class="claimedBy">Claimed by {claim.claimedBy}: {claim.reason}</div>
+		{/claimed}
+		<hr />
+	</li>
