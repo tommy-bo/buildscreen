@@ -9,15 +9,8 @@
 	<l:layout norefresh="true" title="${it.displayName}">
 		<j:set var="status" value="${it.status}"/>
 		<l:header>
+			<meta http-equiv="refresh" content="3600"/>
 			<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
-			<style>
-				.queued {
-					background: transparent url('${rootURL}/plugin/buildscreen/images/progress-queued-yellow-rev.gif') repeat-x;
-				}
-				.building {
-					background: transparent url('${imagesURL}/progress-unknown.gif') repeat-x;
-				}
-			</style>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/dust-full-1.2.3.js"></script>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/templates/failedBuilds.dust"></script>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/templates/job.dust"></script>
@@ -74,7 +67,7 @@
 					</div>
 				</div>
 				<div id="disconnectedOverlay"></div>
-			</div>
+		</div>
 		</l:main-panel>
 	</l:layout>
 </j:jelly>

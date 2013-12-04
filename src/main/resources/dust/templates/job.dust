@@ -1,11 +1,17 @@
 	<li{?claimed} class="claimed"{/claimed}>
 		<h2>
-			{name}
+			{?building}
+				<span class="building"/>
+			{/building}
 			{?queued}
-				<div class="queued"/>
+				<span class="queued">
+			{/queued}
+				{name}
+			{?queued}
+				</span>
 			{/queued}
 			{?building}
-				<div class="building"/>
+				</span>
 			{/building}
 		</h2>
 		<div class="lastSuccess">Since {lastSuccessfulBuildText}</div>

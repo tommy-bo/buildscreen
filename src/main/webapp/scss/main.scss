@@ -1,7 +1,13 @@
 $failBg: #EF2929;
 $unstableBg: #F57D1F;//#FCD116;
 $stableBg: #1BD130;
+$shade: rgba(0, 0, 0, 0.4);
 $disconectedBg: #AAAAAA;
+
+@mixin keyframes($name) {
+	@-webkit-keyframes #{$name} { @content; }
+	@keyframes #{$name} { @content; }
+}
 
 #header {
 	display: none;
@@ -62,13 +68,13 @@ body {
 	position: absolute;
 	padding: 0.5em;
 	-webkit-transition: 2s;
-	transition: 2s;	
+	transition: 2s;
 }
 
 #menu:hover {
 	opacity: 1;
 	-webkit-transition: 2s;
-	transition: 2s;	
+	transition: 2s;
 }
 
 .head {
@@ -105,7 +111,7 @@ h2 {
 	margin: 0;
 	font-size: 19pt;
 	font-weight: normal;
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: $shade;
 	width: 60%;
 	margin: 0 auto;
 	border-radius: 1em;
@@ -133,7 +139,7 @@ h2 {
 	-webkit-transition: height 3s;
 	transition: height 3s;
 	font-size: 21pt;
-	
+
 	ul {
 		list-style: none inside none;
 		padding: 0;
@@ -147,11 +153,11 @@ h2 {
 	transition: 3s;
 }
 
-.FAILED .failureContainer, .failureContainer ul.FAILED {
+.FAILED .failureContainer/*, .failureContainer ul.FAILED*/ {
 	background-color: $failBg;
 }
 
-.UNSTABLE .failureContainer, .failureContainer ul.UNSTABLE {
+/*.UNSTABLE .failureContainer, .failureContainer ul.UNSTABLE {
 	background-color: $unstableBg;
 }
 
@@ -170,7 +176,7 @@ h2 {
 .FAILED .failureContainer ul.UNSTABLE li:last-child {
 	background: -moz-linear-gradient(top, $unstableBg 90%, $failBg);
 }
-
+*/
 .failureContainer li {
 	padding-top: 0.2em;
 	position: relative;
@@ -185,7 +191,7 @@ hr {
 /*.FAILED:last-of-type {
 	background-color: blue;
 	}
-	
+
 	.UNSTABLE {
 	background-color: green;
 	}
@@ -201,6 +207,8 @@ hr {
 
 .UNSTABLE h2 {
 	color: #FFFF00;
+	background-color: mix(rgba(0,0,0,0.4), mix($failBg, $unstableBg));
+/*	background-color: rgba(28, 64, 0, 0.4); /* Og resten av bakgrunn rød?*/
 }
 
 .FAILED.claimed h2 {
@@ -211,9 +219,30 @@ hr {
 	color: #cccc00;
 }
 
-.queued, .building {
-	width: 100%;
-	height: 8px;
+.queued {
+	animation: queued 5s infinite alternate ease-in-out;
+	-webkit-animation: queued 5s infinite alternate ease-in-out;
+}
+
+/*@keyframes queued {*/
+@include keyframes(queued) {
+	from {
+		text-shadow:0px 0px 0px #FF0000;
+	}
+	to {
+		text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+		-webkit-text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+	}
+}
+
+.building {
+	animation: building 5s infinite alternate ease-in-out;
+	-webkit-animation: building 5s infinite alternate ease-in-out;
+}
+
+@include keyframes(building) {
+	from {color: inherit;}
+	to {color: #3465A4;}
 }
 
 .lastSuccess {
@@ -221,6 +250,7 @@ hr {
 	font-size: 12pt;
 	position: absolute;
 	right: 0;
+	margin-right: 1em;
 	top: 0;
 }
 
@@ -262,6 +292,6 @@ hr {
 .visible {
 	opacity: 1;
 	-webkit-transition: opacity 5s linear;
-	transition: 5s;	
+	transition: 5s;
 	display: block;
 }
