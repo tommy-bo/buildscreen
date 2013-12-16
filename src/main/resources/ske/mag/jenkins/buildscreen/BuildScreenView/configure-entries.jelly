@@ -9,13 +9,13 @@
 				 xmlns:f="/lib/form" 
 				 xmlns:i="jelly:fmt">
 	<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
-<style>
-	.deleteButton {
-	border: none; 
-	background: url('${imagesURL}/24x24/edit-delete.png') transparent;
-}
+	<style>
+		.deleteButton {
+			border: none;
+			background: url('${imagesURL}/24x24/edit-delete.png') transparent;
+		}
 
-</style>
+	</style>
 	<f:entry title="${%Jobs}">
 		<j:forEach var="job" items="${app.items}">
 			<f:checkbox name="${job.name}" checked="${it.contains(job)}" />
@@ -31,12 +31,15 @@
 		</f:entry>
 	</f:optionalBlock>
 
-	<f:entry title="${%Play sound on fail?}" field="playSoundOnFail">
-		<f:checkbox name="playSoundOnFail" checked="${it.playSoundOnFail}" value="true" field="playSoundOnFail" />
+	<f:entry title="${%Polling interval}" field="pollingIntervalInSeconds">
+		<f:number field="pollingIntervalInSeconds" default="30"/>
+	</f:entry>
+	<f:entry title="${%Rotation interval in green mode}" field="rotationInSeconds">
+		<f:number field="rotationInSeconds" default="120"/>
 	</f:entry>
 
-	<f:entry title="${%Play sound on stable?}" field="playSoundOnStable">
-		<f:checkbox name="playSoundOnStable" checked="${it.playSoundOnStable}" value="true" field="playSoundOnStable" />
+	<f:entry title="${%Play sounds?}" field="playSounds">
+		<f:checkbox field="playSounds" default="true"/>
 	</f:entry>
 
 	<f:entry title="${%Loop through following pages}">

@@ -1,19 +1,21 @@
 	<li{?claimed} class="claimed"{/claimed}>
-		<h2>
-			{?building}
-				<span class="building"/>
-			{/building}
-			{?queued}
-				<span class="queued">
-			{/queued}
-				{name}
-			{?queued}
-				</span>
-			{/queued}
-			{?building}
-				</span>
-			{/building}
-		</h2>
+		<a href="{url}">
+			<h2>
+				{?building}
+					<span class="building"/>
+				{/building}
+				{?queued}
+					<span class="queued">
+				{/queued}
+					{name}
+				{?queued}
+					</span>
+				{/queued}
+				{?building}
+					</span>
+				{/building}
+			</h2>
+		</a>
 		<div class="lastSuccess">Since {lastSuccessfulBuildText}</div>
 		{?culprits}
 			<div class="culprits">Culprits: {culprits}</div>

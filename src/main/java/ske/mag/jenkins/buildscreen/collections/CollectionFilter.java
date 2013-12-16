@@ -49,7 +49,16 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 	private class IncludeOnlyLatestBuildPredicate implements Predicate<AbstractBuild> {
 
 		public boolean apply(AbstractBuild input) {
-			return input.getNextBuild() == null || input.getNextBuild().isBuilding();
+			return noneOfTheNextBuildsMatters(input.getNextBuild());
+		}
+
+		private boolean noneOfTheNextBuildsMatters(AbstractBuild nextBuild) {
+			if(nextBuild == null || nextBuild.isBuilding())
+				return true;
+			if(nextBuild.getResult().isWorseOrEqualTo(Result.ABORTED)) {
+				return noneOfTheNextBuildsMatters(nextBuild.getNextBuild());
+			}
+			return false;
 		}
 	}
 

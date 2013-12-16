@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
+import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
@@ -19,16 +20,17 @@ import org.kohsuke.stapler.export.ExportedBean;
 @ExportedBean(defaultVisibility = 100)
 public class BuildScreenView extends ListView {
 
-	private boolean playSoundOnFail;
-	private boolean playSoundOnStable;
+	private Integer pageRefreshInHours = 24;
+	private Integer pollingIntervalInSeconds;
+	private Integer rotationInSeconds;
+	private boolean playSounds;
 	private List<String> pages;
 
 	@DataBoundConstructor
-	public BuildScreenView(String name, boolean playSoundOnFail, boolean playSoundOnStable, List<String> pages, ViewGroup owner) {
+	public BuildScreenView(
+					String name,
+					ViewGroup owner) {
 		super(name, owner);
-		this.playSoundOnFail = playSoundOnFail;
-		this.playSoundOnStable = playSoundOnStable;
-		this.pages = pages;
 	}
 
 	@Override
@@ -53,20 +55,24 @@ public class BuildScreenView extends ListView {
 		return update;
 	}
 
-	public boolean isPlaySoundOnFail() {
-		return playSoundOnFail;
+	public Integer getPageRefreshInSeconds() {
+		return pageRefreshInHours * 60 * 60;
 	}
 
-	public void setPlaySoundOnFail(boolean playSoundOnFail) {
-		this.playSoundOnFail = playSoundOnFail;
+	public Integer getPollingIntervalInSeconds() {
+		return pollingIntervalInSeconds;
 	}
 
-	public boolean isPlaySoundOnStable() {
-		return playSoundOnStable;
+	public Integer getRotationInSeconds() {
+		return rotationInSeconds;
 	}
 
-	public void setPlaySoundOnStable(boolean playSoundOnStable) {
-		this.playSoundOnStable = playSoundOnStable;
+	public boolean isPlaySounds() {
+		return playSounds;
+	}
+
+	public void setPlaySounds(boolean playSounds) {
+		this.playSounds = playSounds;
 	}
 
 	public List<String> getPages() {
@@ -84,11 +90,13 @@ public class BuildScreenView extends ListView {
 	}
 
 	@Override
-	protected void submit(StaplerRequest req) throws ServletException, IOException, 
+	protected void submit(StaplerRequest req) throws ServletException, IOException,
 			Descriptor.FormException {
 		super.submit(req);
-		setPlaySoundOnFail(Boolean.parseBoolean(req.getParameter("playSoundOnFail")));
-		setPlaySoundOnStable(Boolean.parseBoolean(req.getParameter("playSoundOnStable")));
+		JSONObject json = req.getSubmittedForm();
+		this.pollingIntervalInSeconds = json.getInt("pollingIntervalInSeconds");
+		this.rotationInSeconds = json.getInt("rotationInSeconds");
+		this.playSounds = json.getBoolean("playSounds");
 		setPages(req.getParameterValues("page"));
 	}
 	

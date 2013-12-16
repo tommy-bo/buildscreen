@@ -9,6 +9,7 @@ import org.kohsuke.stapler.export.ExportedBean;
 public class FailedJob {
 
 	private String name;
+	private String url;
 	private String culprits;
 	private Claim claim;
 	private boolean building;
@@ -23,6 +24,15 @@ public class FailedJob {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Exported
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	@Exported

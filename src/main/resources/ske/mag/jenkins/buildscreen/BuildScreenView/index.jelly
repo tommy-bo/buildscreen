@@ -9,7 +9,7 @@
 	<l:layout norefresh="true" title="${it.displayName}">
 		<j:set var="status" value="${it.status}"/>
 		<l:header>
-			<meta http-equiv="refresh" content="3600"/>
+			<meta http-equiv="refresh" content="${it.pageRefreshInSeconds}"/>
 			<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/dust-full-1.2.3.js"></script>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/templates/failedBuilds.dust"></script>
@@ -19,26 +19,25 @@
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/buildScreenUpdater.js"/>
 			<script type="text/javascript">
 				document.observe("dom:loaded", function() {
-					new Rotator("pageView", "visible").rotatePages(120);
-					new BuildScreenUpdater("${rootURL}/plugin/buildscreen/media/kids_cheer.wav",
-														"${rootURL}/plugin/buildscreen/media/siren.ogg").everySeconds(10);
+					new Rotator("pageView", "visible").rotatePages(${it.rotationInSeconds});
+					new BuildScreenUpdater()
+						.playOnSuccess("${rootURL}/plugin/buildscreen/media/SUCCESS.wav")
+						.playOnUnstable("${rootURL}/plugin/buildscreen/media/UNSTABLE.mp3")
+						.playOnFailure("${rootURL}/plugin/buildscreen/media/FAILURE.mp3")
+						.playOnExtremeFailure("${rootURL}/plugin/buildscreen/media/EXTREME_FAILURE.mp3")
+						.goLoud(${it.playSounds})
+						.everySeconds(${it.pollingIntervalInSeconds});
 					new ViewUpdater(${status.toJson()}).updateStatus();
 				});
 			</script>
 		</l:header>
-		<l:breadcrumb>
-			<a href="test">test</a>
-		</l:breadcrumb>
-		<l:side-panel>
-			<div>side-panel</div>
-		</l:side-panel>
 		<l:main-panel>
 			<div id="mainDisplay" class="mainDisplay ${status.status}">
 				<div class="head">
 					<div class="timeSinceStatusChange">
 						<h1>
 							<!--<span class="timestamp" id="status">${status.statusTime}</span> since last accident-->
-							Jenkins is OK
+							----TODO:---- Jenkins is OK/FAILING (+ speech)
 						</h1>
 					</div>
 					<div id="menu">

@@ -4,9 +4,7 @@ import com.google.common.base.Function;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Run;
-import hudson.model.User;
 import hudson.plugins.claim.AbstractClaimBuildAction;
-import java.util.Collections;
 import java.util.Date;
 import jenkins.model.Jenkins;
 import org.apache.commons.lang.StringUtils;
@@ -24,6 +22,7 @@ public class AbstractBuildToFailedJobTransformFunction implements Function<Abstr
 		final String fullProjectName = build.getProject().getFullName();
 		FailedJob failedJob = new FailedJob();
 		failedJob.setName(fullProjectName + " (" + build.getDisplayName() + ")");
+		failedJob.setUrl(jenkins.getRootUrl() + build.getUrl());
 		failedJob.setCulprits(StringUtils.join(build.getCulprits(), ", "));
 		failedJob.setClaim(findClaims(build));
 		failedJob.setBuilding(isNextBuildBuilding(build));
@@ -38,7 +37,7 @@ public class AbstractBuildToFailedJobTransformFunction implements Function<Abstr
 		if (resolvedProject == null) {
 			return null;
 		}
-		Run lastSuccessfulBuild = resolvedProject.getLastSuccessfulBuild();
+		Run lastSuccessfulBuild = resolvedProject.getLastStableBuild();
 		return lastSuccessfulBuild != null ? lastSuccessfulBuild.getTime() : null;
 	}
 

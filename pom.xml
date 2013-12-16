@@ -44,6 +44,7 @@
 				<artifactId>maven-hpi-plugin</artifactId>
 				<configuration>
 					<webApp>${project.build.directory}/${project.build.finalName}.hpi</webApp>
+					<contextPath>jenkins</contextPath>
 					<port>8090</port>
 				</configuration>
 			</plugin>

@@ -1,7 +1,31 @@
-BuildScreenUpdater = function(successSound, failureSound) {
+BuildScreenUpdater = function() {
+	window.sounds = {};
 
-	window.sounds = {"FAILED": new buzz.sound(failureSound),
-		"SUCCESS": new buzz.sound(successSound)};
+	this.goLoud = function(goLoud) {
+		window.sounds.goLoud = goLoud;
+		return this;
+	};
+	
+	this.playOnSuccess = function(successSound) {
+		window.sounds["STABLE"] = new buzz.sound(successSound);
+		return this;
+	};
+
+		this.playOnFailure = function(failureSound) {
+		window.sounds["FAILED"] = new buzz.sound(failureSound);
+		return this;
+	};
+
+	this.playOnExtremeFailure = function(failureSound) {
+		window.sounds["EXTREME"] = new buzz.sound(failureSound);
+		return this;
+	};
+
+	this.playOnUnstable = function(unstableSound) {
+		window.sounds["UNSTABLE"] = new buzz.sound(unstableSound);
+		return this;
+	};
+
 
 	this.everySeconds = function(updateIntevalInSeconds) {
 		this.updateIntevalInSeconds = updateIntevalInSeconds;
@@ -38,12 +62,13 @@ ViewUpdater = function(updateStatus) {
 	this.updateStatus = function() {
 		if(window.activeBuildScreenStatus) {
 			$("mainDisplay").removeClassName(window.activeBuildScreenStatus.status);
-			if(this.newBuildScreenStatus.status !== window.activeBuildScreenStatus.status) {
+			if(this.newBuildScreenStatus.status !== window.activeBuildScreenStatus.status
+				&& window.sounds.goLoud === true) {
 				window.sounds[this.newBuildScreenStatus.status].play();
 			}
 		}
 		$("mainDisplay").addClassName(this.newBuildScreenStatus.status);
-		if(this.newBuildScreenStatus.status === 'FAILED') {
+		if(this.newBuildScreenStatus.status === 'FAILED' || this.newBuildScreenStatus.status === 'UNSTABLE') {
 			var result;
 			dust.render("failedBuilds", this.newBuildScreenStatus, function(err, res) {
 				if (err) {
@@ -53,7 +78,6 @@ ViewUpdater = function(updateStatus) {
 			});
 			$("failedBuilds").update(result);
 		}
-		$("status").update(this.newBuildScreenStatus.statusTime);
 		window.activeBuildScreenStatus = this.newBuildScreenStatus;
 	};
 };

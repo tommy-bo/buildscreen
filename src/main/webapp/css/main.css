@@ -25,6 +25,9 @@ body {
 
 #disconnectedOverlay.disconnected {
   -webkit-transition: 30s;
+  -mozilla-transition: 30s;
+  -o-transition: 30s;
+  -ms-transition: 30s;
   transition: 30s;
   top: 0;
   opacity: 0.7;
@@ -57,12 +60,18 @@ body {
   position: absolute;
   padding: 0.5em;
   -webkit-transition: 2s;
+  -mozilla-transition: 2s;
+  -o-transition: 2s;
+  -ms-transition: 2s;
   transition: 2s;
 }
 
 #menu:hover {
   opacity: 1;
   -webkit-transition: 2s;
+  -mozilla-transition: 2s;
+  -o-transition: 2s;
+  -ms-transition: 2s;
   transition: 2s;
 }
 
@@ -74,12 +83,18 @@ body {
   right: 0;
   height: 3.2em;
   -webkit-transition: background 3s;
+  -mozilla-transition: background 3s;
+  -o-transition: background 3s;
+  -ms-transition: background 3s;
   transition: background 3s;
 }
 
 .FAILED .head {
   background: #EF2929;
   -webkit-transition: background 3s;
+  -mozilla-transition: background 3s;
+  -o-transition: background 3s;
+  -ms-transition: background 3s;
   transition: background 3s;
 }
 
@@ -126,48 +141,34 @@ h2 {
   text-align: center;
   height: 0;
   -webkit-transition: height 3s;
+  -mozilla-transition: height 3s;
+  -o-transition: height 3s;
+  -ms-transition: height 3s;
   transition: height 3s;
   font-size: 21pt;
+  background-color: #ef2929;
 }
 .failureContainer ul {
   list-style: none inside none;
   padding: 0;
   margin: 0;
 }
+.failureContainer li {
+  padding-top: 0.2em;
+  position: relative;
+}
+.failureContainer a {
+  color: inherit;
+  text-decoration: none;
+}
 
 .FAILED .failureContainer, .UNSTABLE .failureContainer {
   height: 100%;
   -webkit-transition: 3s;
+  -mozilla-transition: 3s;
+  -o-transition: 3s;
+  -ms-transition: 3s;
   transition: 3s;
-}
-
-.FAILED .failureContainer {
-  background-color: #ef2929;
-}
-
-/*.UNSTABLE .failureContainer, .failureContainer ul.UNSTABLE {
-	background-color: $unstableBg;
-}
-
-.failureContainer ul.FAILED li:first-child {
-	background: -moz-linear-gradient(top, mix(black, $failBg), $failBg);
-}
-
-.failureContainer ul.FAILED li:last-child {
-	background: -moz-linear-gradient(top, $failBg, mix($failBg, $unstableBg));
-}
-
-.failureContainer ul.UNSTABLE li:first-child {
-	background: -moz-linear-gradient(top, mix($failBg, $unstableBg), $unstableBg);
-}
-
-.FAILED .failureContainer ul.UNSTABLE li:last-child {
-	background: -moz-linear-gradient(top, $unstableBg 90%, $failBg);
-}
-*/
-.failureContainer li {
-  padding-top: 0.2em;
-  position: relative;
 }
 
 hr {
@@ -177,66 +178,73 @@ hr {
   margin: 0;
 }
 
-/*.FAILED:last-of-type {
-	background-color: blue;
-	}
-
-	.UNSTABLE {
-	background-color: green;
-	}
-*/
-/*.UNSTABLE:last-of-type {
-	background-color: blue;
-}*/
-.FAILED h2 {
+ul.FAILED h2 {
   color: #ef2929;
 }
 
-.UNSTABLE h2 {
+ul.UNSTABLE h2 {
   color: #FFFF00;
   background-color: rgba(193, 66, 28, 0.7);
-  /*	background-color: rgba(28, 64, 0, 0.4); /* Og resten av bakgrunn rød?*/
 }
 
-.FAILED.claimed h2 {
+ul.FAILED.claimed h2 {
   color: #ff6600;
 }
 
-.UNSTABLE.claimed h2 {
+ul.UNSTABLE.claimed h2 {
   color: #cccc00;
 }
 
 .queued {
-  animation: queued 5s infinite alternate ease-in-out;
   -webkit-animation: queued 5s infinite alternate ease-in-out;
+  -mozilla-animation: queued 5s infinite alternate ease-in-out;
+  -o-animation: queued 5s infinite alternate ease-in-out;
+  -ms-animation: queued 5s infinite alternate ease-in-out;
+  animation: queued 5s infinite alternate ease-in-out;
 }
 
-/*@keyframes queued {*/
 @-webkit-keyframes queued {
   from {
-    text-shadow: 0px 0px 0px #FF0000;
+    -webkit-text-shadow: 0px 0px 0px red;
+    -mozilla-text-shadow: 0px 0px 0px red;
+    -o-text-shadow: 0px 0px 0px red;
+    -ms-text-shadow: 0px 0px 0px red;
+    text-shadow: 0px 0px 0px red;
   }
 
   to {
-    text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
     -webkit-text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+    -mozilla-text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+    -o-text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+    -ms-text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+    text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
   }
 }
 
 @keyframes queued {
   from {
-    text-shadow: 0px 0px 0px #FF0000;
+    -webkit-text-shadow: 0px 0px 0px red;
+    -mozilla-text-shadow: 0px 0px 0px red;
+    -o-text-shadow: 0px 0px 0px red;
+    -ms-text-shadow: 0px 0px 0px red;
+    text-shadow: 0px 0px 0px red;
   }
 
   to {
-    text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
     -webkit-text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+    -mozilla-text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+    -o-text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+    -ms-text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
+    text-shadow: 2px 2px 5px #3465A4, 2px -2px 5px #3465A4, -2px -2px 5px #3465A4, -2px 2px 5px #3465A4;
   }
 }
 
 .building {
-  animation: building 5s infinite alternate ease-in-out;
   -webkit-animation: building 5s infinite alternate ease-in-out;
+  -mozilla-animation: building 5s infinite alternate ease-in-out;
+  -o-animation: building 5s infinite alternate ease-in-out;
+  -ms-animation: building 5s infinite alternate ease-in-out;
+  animation: building 5s infinite alternate ease-in-out;
 }
 
 @-webkit-keyframes building {
@@ -291,7 +299,10 @@ hr {
   opacity: 0;
   position: absolute;
   -webkit-transition: opacity 5s linear;
-  transition: 5s;
+  -mozilla-transition: opacity 5s linear;
+  -o-transition: opacity 5s linear;
+  -ms-transition: opacity 5s linear;
+  transition: opacity 5s linear;
   display: none;
 }
 
@@ -303,6 +314,9 @@ hr {
 .visible {
   opacity: 1;
   -webkit-transition: opacity 5s linear;
-  transition: 5s;
+  -mozilla-transition: opacity 5s linear;
+  -o-transition: opacity 5s linear;
+  -ms-transition: opacity 5s linear;
+  transition: opacity 5s linear;
   display: block;
 }
