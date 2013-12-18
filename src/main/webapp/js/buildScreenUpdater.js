@@ -11,7 +11,12 @@ BuildScreenUpdater = function() {
 		return this;
 	};
 
-		this.playOnFailure = function(failureSound) {
+	this.playOnOneLessFailure = function(oneLessFailureSound) {
+		window.sounds["ONE_DOWN"] = new buzz.sound(oneLessFailureSound);
+		return this;
+	};
+
+	this.playOnFailure = function(failureSound) {
 		window.sounds["FAILED"] = new buzz.sound(failureSound);
 		return this;
 	};
@@ -62,13 +67,16 @@ ViewUpdater = function(updateStatus) {
 	this.updateStatus = function() {
 		if(window.activeBuildScreenStatus) {
 			$("mainDisplay").removeClassName(window.activeBuildScreenStatus.status);
-			if(this.newBuildScreenStatus.status !== window.activeBuildScreenStatus.status
-				&& window.sounds.goLoud === true) {
-				window.sounds[this.newBuildScreenStatus.status].play().bind("ended", function() {
-					meSpeak.speak('list new culprits here...');
-				});
+			if(window.sounds.goLoud === true) {
+				var sound = findSoundToPlay(this.newBuildScreenStatus, window.activeBuildScreenStatus);
+				if(sound) {
+					sound.play()/*.bind("ended", function() {
+						meSpeak.speak('list new culprits here...');
+					})*/;
+				}
 			}
 		}
+
 		$("mainDisplay").addClassName(this.newBuildScreenStatus.status);
 		if(this.newBuildScreenStatus.status === 'FAILED' || this.newBuildScreenStatus.status === 'UNSTABLE') {
 			var result;
@@ -81,5 +89,47 @@ ViewUpdater = function(updateStatus) {
 			$("failedBuilds").update(result);
 		}
 		window.activeBuildScreenStatus = this.newBuildScreenStatus;
+	};
+
+	var findSoundToPlay = function(newStatus, activeStatus) {
+		if(newStatus.status !== activeStatus.status && newStatus.status === "STABLE") {
+			return window.sounds["STABLE"];
+		}
+		if(hasMoreItems(newStatus.failedJobs, activeStatus.failedJobs)) {
+			return window.sounds["FAILED"];
+		} else if (hasMoreItems(newStatus.unstableJobs, activeStatus.unstableJobs)) {
+			return window.sounds["UNSTABLE"];
+		} else if (hasMoreItems(activeStatus.failedJobs.concat(activeStatus.unstableJobs), newStatus.failedJobs.concat(newStatus.unstableJobs))) {
+			return window.sounds["ONE_DOWN"];
+		}
+//		else {
+//			window.sounds[this.newBuildScreenStatus.status];
+//		}
+
+//
+//		var newStatusFailedJobs = toMap(newStatus.failedJobs);
+//		activeStatus.failedJobs.forEach(function(activeFailure) {
+//			if(!newStatusFailedJobs[activeFailure.name] ) {
+//				;
+//			}
+//		});
+//		if(does(newStatus).haveElementsNotIn(activeStatus))
+	};
+
+	var hasMoreItems = function(newFailures, activeFailures) {
+		var activeFailedJobs = toMap(activeFailures);
+		for (var i = 0; i < newFailures.length; ++i) {
+			if(!activeFailedJobs[newFailures[i].name]) {
+				return true;
+			}
+		}
+		return false;
+	};
+
+	var toMap = function(jobArray) {
+		var map = {};
+		for (var i = 0; i < jobArray.length; ++i)
+			map[jobArray[i].name] = jobArray[i];
+		return map;
 	};
 };

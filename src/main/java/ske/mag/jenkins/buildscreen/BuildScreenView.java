@@ -20,7 +20,7 @@ import org.kohsuke.stapler.export.ExportedBean;
 @ExportedBean(defaultVisibility = 100)
 public class BuildScreenView extends ListView {
 
-	private Integer pageRefreshInHours = 24;
+	private final Integer pageRefreshInHours = 24;
 	private Integer pollingIntervalInSeconds;
 	private Integer rotationInSeconds;
 	private boolean playSounds;

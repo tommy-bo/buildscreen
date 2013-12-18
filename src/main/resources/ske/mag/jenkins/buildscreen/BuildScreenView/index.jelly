@@ -25,6 +25,7 @@
 					new Rotator("pageView", "visible").rotatePages(${it.rotationInSeconds});
 					new BuildScreenUpdater()
 						.playOnSuccess("${rootURL}/plugin/buildscreen/media/SUCCESS.wav")
+						.playOnOneLessFailure("${rootURL}/plugin/buildscreen/media/SUCCESS_SINGLE.mp3")
 						.playOnUnstable("${rootURL}/plugin/buildscreen/media/UNSTABLE.mp3")
 						.playOnFailure("${rootURL}/plugin/buildscreen/media/FAILURE.mp3")
 						.playOnExtremeFailure("${rootURL}/plugin/buildscreen/media/EXTREME_FAILURE.mp3")
