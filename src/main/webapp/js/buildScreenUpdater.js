@@ -64,7 +64,9 @@ ViewUpdater = function(updateStatus) {
 			$("mainDisplay").removeClassName(window.activeBuildScreenStatus.status);
 			if(this.newBuildScreenStatus.status !== window.activeBuildScreenStatus.status
 				&& window.sounds.goLoud === true) {
-				window.sounds[this.newBuildScreenStatus.status].play();
+				window.sounds[this.newBuildScreenStatus.status].play().bind("ended", function() {
+					meSpeak.speak('list new culprits here...');
+				});
 			}
 		}
 		$("mainDisplay").addClassName(this.newBuildScreenStatus.status);

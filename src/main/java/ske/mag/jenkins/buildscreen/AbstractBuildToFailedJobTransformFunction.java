@@ -1,13 +1,15 @@
 package ske.mag.jenkins.buildscreen;
 
 import com.google.common.base.Function;
+import static com.google.common.collect.Iterables.transform;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Run;
+import hudson.model.User;
 import hudson.plugins.claim.AbstractClaimBuildAction;
 import java.util.Date;
 import jenkins.model.Jenkins;
-import org.apache.commons.lang.StringUtils;
+import static org.apache.commons.lang.StringUtils.join;
 import static ske.mag.jenkins.buildscreen.Claim.claimFor;
 
 public class AbstractBuildToFailedJobTransformFunction implements Function<AbstractBuild, FailedJob> {
@@ -23,7 +25,8 @@ public class AbstractBuildToFailedJobTransformFunction implements Function<Abstr
 		FailedJob failedJob = new FailedJob();
 		failedJob.setName(fullProjectName + " (" + build.getDisplayName() + ")");
 		failedJob.setUrl(jenkins.getRootUrl() + build.getUrl());
-		failedJob.setCulprits(StringUtils.join(build.getCulprits(), ", "));
+		failedJob.setCulpritIds(join(transform(build.getCulprits(), getId()).iterator(), ", "));
+		failedJob.setCulprits(join(build.getCulprits(), ", "));
 		failedJob.setClaim(findClaims(build));
 		failedJob.setBuilding(isNextBuildBuilding(build));
 		failedJob.setQueued(jenkins.getQueue().contains(build.getProject()));
@@ -51,5 +54,13 @@ public class AbstractBuildToFailedJobTransformFunction implements Function<Abstr
 
 	private boolean isNextBuildBuilding(AbstractBuild build) {
 		return build.getNextBuild() != null && build.getNextBuild().isBuilding();
+	}
+
+	private static Function<User, String> getId() {
+		return new Function<User, String>() {
+			public String apply(User user) {
+				return user.getId();
+			}
+		};
 	}
 }

@@ -17,8 +17,11 @@
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/buzz.js"/>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/rotator.js"/>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/buildScreenUpdater.js"/>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/mespeak.js"/>
 			<script type="text/javascript">
 				document.observe("dom:loaded", function() {
+					meSpeak.loadConfig("${rootURL}/plugin/buildscreen/js/mespeak_config.json");
+					meSpeak.loadVoice("${rootURL}/plugin/buildscreen/js/en.json");
 					new Rotator("pageView", "visible").rotatePages(${it.rotationInSeconds});
 					new BuildScreenUpdater()
 						.playOnSuccess("${rootURL}/plugin/buildscreen/media/SUCCESS.wav")

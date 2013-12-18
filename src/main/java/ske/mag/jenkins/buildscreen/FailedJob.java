@@ -16,6 +16,7 @@ public class FailedJob {
 	private boolean queued;
 	private Status buildStatus;
 	private Date lastSuccessfulBuildTime;
+	private String culpritIds;
 
 	@Exported
 	public String getName() {
@@ -33,6 +34,15 @@ public class FailedJob {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	@Exported
+	public String getCulpritIds() {
+		return culpritIds;
+	}
+
+	public void setCulpritIds(String culpritIds) {
+		this.culpritIds = culpritIds;
 	}
 
 	@Exported
