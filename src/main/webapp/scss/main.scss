@@ -1,7 +1,7 @@
 $failBg: #EF2929;
 $unstableBg: #F57D1F;//#FCD116;
 $stableBg: #1BD130;
-$shade: rgba(0, 0, 0, 0.4);
+$shade: rgba(0, 0, 0, 0.1);
 $disconectedBg: #AAAAAA;
 $browserPrefixes: "-webkit-", "-mozilla-", "-o-", "-ms-", "";
 
@@ -28,7 +28,7 @@ $browserPrefixes: "-webkit-", "-mozilla-", "-o-", "-ms-", "";
 	display: none;
 }
 
-body {
+body, .mainDisplay {
 	font-family: Sans-serif;
 }
 
@@ -111,10 +111,10 @@ h1 {
 
 h2 {
 	margin: 0;
-	font-size: 19pt;
+	font-size: 40pt;
 	font-weight: normal;
 	background-color: $shade;
-	width: 60%;
+	width: 65%;
 	margin: 0 auto;
 	border-radius: 1em;
 	overflow: hidden;
@@ -139,7 +139,7 @@ h2 {
 	text-align: center;
 	height: 0;
 	@include withBrowserSupport(transition, height 3s);
-	font-size: 21pt;
+	font-size: 35pt;
 	background-color: $failBg;
 
 	ul {
@@ -171,12 +171,7 @@ hr {
 	margin: 0;
 }
 
-ul.FAILED h2 {
-	color: rgba(239, 41, 41, 1);
-}
-
 ul.UNSTABLE h2 {
-	color: #fcd116;
 	background-color: mix(rgba(0,0,0,0.4), mix($failBg, $unstableBg));
 }
 
@@ -212,7 +207,7 @@ ul.UNSTABLE.claimed h2 {
 
 .lastSuccess {
 	color: rgba(0, 0, 0, 0.5);
-	font-size: 12pt;
+	font-size: 15pt;
 	position: absolute;
 	right: 0;
 	margin-right: 1em;
@@ -224,11 +219,11 @@ ul.UNSTABLE.claimed h2 {
 
 .claimedBy {
 	display: block;
-	font-size: 16pt;
+	font-size: 20pt;
 	font-style: italic;
 	margin-left: auto;
 	margin-right: auto;
-	width: 60%;
+	width: 65%;
 }	
 
 #rotating-view-container {

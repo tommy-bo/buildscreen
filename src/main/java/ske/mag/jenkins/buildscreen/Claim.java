@@ -32,6 +32,9 @@ public class Claim implements Comparable<Claim> {
 	}
 
 	public int compareTo(Claim o) {
+        if(o == null) {
+            return -1;
+        }
 		return this.toString().compareTo(o.toString());
 	}
 

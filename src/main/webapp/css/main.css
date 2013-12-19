@@ -10,7 +10,7 @@
   display: none;
 }
 
-body {
+body, .mainDisplay {
   font-family: Sans-serif;
 }
 
@@ -113,10 +113,10 @@ h1 {
 
 h2 {
   margin: 0;
-  font-size: 19pt;
+  font-size: 40pt;
   font-weight: normal;
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 60%;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 65%;
   margin: 0 auto;
   border-radius: 1em;
   overflow: hidden;
@@ -145,7 +145,7 @@ h2 {
   -o-transition: height 3s;
   -ms-transition: height 3s;
   transition: height 3s;
-  font-size: 21pt;
+  font-size: 35pt;
   background-color: #ef2929;
 }
 .failureContainer ul {
@@ -178,17 +178,12 @@ hr {
   margin: 0;
 }
 
-ul.FAILED h2 {
-  color: #ef2929;
-}
-
 ul.UNSTABLE h2 {
-  color: #FFFF00;
   background-color: rgba(193, 66, 28, 0.7);
 }
 
 ul.FAILED.claimed h2 {
-  color: #ff6600;
+  color: #fc6105;
 }
 
 ul.UNSTABLE.claimed h2 {
@@ -269,7 +264,7 @@ ul.UNSTABLE.claimed h2 {
 
 .lastSuccess {
   color: rgba(0, 0, 0, 0.5);
-  font-size: 12pt;
+  font-size: 15pt;
   position: absolute;
   right: 0;
   margin-right: 1em;
@@ -278,11 +273,11 @@ ul.UNSTABLE.claimed h2 {
 
 .claimedBy {
   display: block;
-  font-size: 16pt;
+  font-size: 20pt;
   font-style: italic;
   margin-left: auto;
   margin-right: auto;
-  width: 60%;
+  width: 65%;
 }
 
 #rotating-view-container {
