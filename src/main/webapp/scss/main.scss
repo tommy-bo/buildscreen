@@ -176,12 +176,12 @@ ul.FAILED h2 {
 }
 
 ul.UNSTABLE h2 {
-	color: #FFFF00;
+	color: #fcd116;
 	background-color: mix(rgba(0,0,0,0.4), mix($failBg, $unstableBg));
 }
 
 ul.FAILED.claimed h2 {
-	color: #ff6600;
+	color: #fc6105;
 }
 
 ul.UNSTABLE.claimed h2 {

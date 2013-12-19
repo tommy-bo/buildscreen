@@ -39,10 +39,7 @@
 			<div id="mainDisplay" class="mainDisplay ${status.status}">
 				<div class="head">
 					<div class="timeSinceStatusChange">
-						<h1>
-							<!--<span class="timestamp" id="status">${status.statusTime}</span> since last accident-->
-							----TODO:---- Jenkins is OK/FAILING (+ speech)
-						</h1>
+						<h1 id="status"></h1>
 					</div>
 					<div id="menu">
 						<a href="configure" title="Edit view">

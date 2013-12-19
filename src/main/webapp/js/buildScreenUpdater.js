@@ -78,6 +78,7 @@ ViewUpdater = function(updateStatus) {
 		}
 
 		$("mainDisplay").addClassName(this.newBuildScreenStatus.status);
+        $("status").update(this.newBuildScreenStatus.status === 'STABLE' ? "It's awesometime" : "Jenkins is failing");
 		if(this.newBuildScreenStatus.status === 'FAILED' || this.newBuildScreenStatus.status === 'UNSTABLE') {
 			var result;
 			dust.render("failedBuilds", this.newBuildScreenStatus, function(err, res) {

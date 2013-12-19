@@ -18,10 +18,10 @@
 		</a>
 		<div class="lastSuccess">Since {lastSuccessfulBuildText}</div>
 		{?culprits}
-			<div class="culprits">Culprits: {culprits}</div>
+			<div class="culprits">{culprits}</div>
 		{/culprits}
 		{?claimed}
-			<div class="claimedBy">Claimed by {claim.claimedBy}: {claim.reason}</div>
+			<div class="claimedBy">{claim.claimedBy} is on it: {claim.reason}</div>
 		{/claimed}
 		<hr />
 	</li>

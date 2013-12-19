@@ -36,6 +36,10 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 		return new CollectionFilter(Collections2.filter(backingCollection, new IncludeOnlyLatestBuildPredicate()));
 	}
 
+	public CollectionFilter byRootBuilds() {
+		return new CollectionFilter(Collections2.filter(backingCollection, new IncludeOnlyRootBuildsPredicate()));
+	}
+
 	@Override
 	public Iterator<AbstractBuild> iterator() {
 		return backingCollection.iterator();
@@ -71,6 +75,13 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 
 		public boolean apply(AbstractBuild input) {
 			return includeResult.equals(input.getResult());
+		}
+	}
+
+	private class IncludeOnlyRootBuildsPredicate implements Predicate<AbstractBuild> {
+
+		public boolean apply(AbstractBuild input) {
+			return input.getRootBuild() == input;
 		}
 	}
 }
