@@ -45,6 +45,7 @@ BuildScreenUpdater = function() {
 	
 	this.update = function() {
 		new Ajax.Request(window.location.href + "statusApi/api/json", {
+            method: "get",
 			onSuccess: function(response) {
 				if(response.status === 200) {
 					$("disconnectedOverlay").removeClassName("disconnected");

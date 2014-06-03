@@ -113,10 +113,10 @@ h1 {
 
 h2 {
   margin: 0;
-  font-size: 40pt;
+  font-size: 35pt;
   font-weight: normal;
   background-color: rgba(0, 0, 0, 0.1);
-  width: 65%;
+  width: 60%;
   margin: 0 auto;
   border-radius: 1em;
   overflow: hidden;
@@ -145,7 +145,7 @@ h2 {
   -o-transition: height 3s;
   -ms-transition: height 3s;
   transition: height 3s;
-  font-size: 35pt;
+  font-size: 26pt;
   background-color: #ef2929;
 }
 .failureContainer ul {
@@ -298,7 +298,7 @@ ul.UNSTABLE.claimed h2 {
   -o-transition: opacity 5s linear;
   -ms-transition: opacity 5s linear;
   transition: opacity 5s linear;
-  display: none;
+  /*display: none;*/
 }
 
 .pageView object {
@@ -313,5 +313,5 @@ ul.UNSTABLE.claimed h2 {
   -o-transition: opacity 5s linear;
   -ms-transition: opacity 5s linear;
   transition: opacity 5s linear;
-  display: block;
+  /*display: block;*/
 }
