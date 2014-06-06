@@ -41,6 +41,9 @@
 	<f:entry title="${%Play sounds?}" field="playSounds">
 		<f:checkbox field="playSounds" default="true"/>
 	</f:entry>
+	<f:entry title="${%Talk about builds?}" field="talk">
+    		<f:checkbox field="talk" default="true"/>
+    	</f:entry>
 
 	<f:entry title="${%Loop through following pages}">
 		<br/>
