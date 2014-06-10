@@ -24,6 +24,7 @@ public class BuildScreenView extends ListView {
 	private Integer pollingIntervalInSeconds;
 	private Integer rotationInSeconds;
 	private boolean playSounds;
+    private boolean talk;
 	private List<String> pages;
 
 	@DataBoundConstructor
@@ -75,7 +76,15 @@ public class BuildScreenView extends ListView {
 		this.playSounds = playSounds;
 	}
 
-	public List<String> getPages() {
+    public boolean isTalk() {
+        return talk;
+    }
+
+    public void setTalk(boolean talk) {
+        this.talk = talk;
+    }
+
+    public List<String> getPages() {
 		return pages;
 	}
 
@@ -97,6 +106,7 @@ public class BuildScreenView extends ListView {
 		this.pollingIntervalInSeconds = json.getInt("pollingIntervalInSeconds");
 		this.rotationInSeconds = json.getInt("rotationInSeconds");
 		this.playSounds = json.getBoolean("playSounds");
+        this.talk = json.getBoolean("talk");
 		setPages(req.getParameterValues("page"));
 	}
 	
