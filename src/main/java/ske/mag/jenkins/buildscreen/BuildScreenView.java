@@ -1,21 +1,24 @@
 package ske.mag.jenkins.buildscreen;
 
-import hudson.Extension;
-import hudson.model.Api;
-import hudson.model.Descriptor;
-import hudson.model.ListView;
-import hudson.model.ViewDescriptor;
-import hudson.model.ViewGroup;
+import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import javax.servlet.ServletException;
-import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.bind.JavaScriptMethod;
 import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
+import hudson.Extension;
+import hudson.model.Api;
+import hudson.model.Descriptor;
+import hudson.model.ListView;
+import hudson.model.Run;
+import hudson.model.TopLevelItem;
+import hudson.model.ViewDescriptor;
+import hudson.model.ViewGroup;
+import hudson.util.RunList;
+import net.sf.json.JSONObject;
 
 @ExportedBean(defaultVisibility = 100)
 public class BuildScreenView extends ListView {
@@ -49,10 +52,13 @@ public class BuildScreenView extends ListView {
 		return new StatusApi(getStatus());
 	}
 
+    @SuppressWarnings("unchecked")
 	public BuildscreenStatus getStatus() {
 		BuildscreenStatus update = new BuildscreenStatus();
-		update.setFailedJobs(FailedJobs.brokenBuilds(getBuilds()));
-		update.setUnstableJobs(FailedJobs.failedBuilds(getBuilds()));
+        List<TopLevelItem> items = getItems();
+        RunList builds = new RunList(items);
+		update.setFailedJobs(FailedJobs.brokenBuilds(builds));
+		update.setUnstableJobs(FailedJobs.failedBuilds(builds));
 		return update;
 	}
 
