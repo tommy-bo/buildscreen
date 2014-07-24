@@ -9,7 +9,6 @@ import hudson.model.Run;
 import java.util.Collection;
 import static com.google.common.collect.Collections2.*;
 import java.util.AbstractCollection;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CollectionFilter extends AbstractCollection<AbstractBuild>{
@@ -21,7 +20,7 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 		};
 
 	private CollectionFilter(Collection<AbstractBuild> backingCollection) {
-		this.backingCollection = new ArrayList<AbstractBuild>(backingCollection);
+		this.backingCollection = backingCollection;
 	}
 
 	public static CollectionFilter filter(Collection<Run> collectionToFilter) {
