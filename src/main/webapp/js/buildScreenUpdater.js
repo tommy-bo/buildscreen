@@ -75,10 +75,8 @@ ViewUpdater = function(updateStatus) {
             $("mainDisplay").removeClassName(window.activeBuildScreenStatus.status);
             if(window.sounds.goLoud === true) {
                 var sound = findSoundToPlay(this.newBuildScreenStatus, window.activeBuildScreenStatus);
-                if(sound) {
-                    /*sound.play()/*.bind("ended", function() {
-                     meSpeak.speak('list new culprits here...');
-                     })*/;
+                if(sound && !iMaySpeak()) {
+                    sound.play();
                 }
             }
         }
@@ -98,9 +96,6 @@ ViewUpdater = function(updateStatus) {
         window.activeBuildScreenStatus = this.newBuildScreenStatus;
     };
 
-    var talkAboutBuilds = function(newStatus, activeStatus) {
-
-    }
     var findSoundToPlay = function(newStatus, activeStatus) {
         if(newStatus.status !== activeStatus.status && newStatus.status === "STABLE") {
             return window.sounds["STABLE"];
@@ -114,29 +109,15 @@ ViewUpdater = function(updateStatus) {
         var previouslyNonHealthyJobs = previouslyFailedJobs.concat(previouslyUnstableJobs);
 
         if(hasMoreItems(currentlyFailingJobs, previouslyFailedJobs)) {
-            mentionFailingJobs(newItemsIn(currentlyFailingJobs,previouslyFailedJobs))
+            mentionFailingJobs(newItemsIn(currentlyFailingJobs,previouslyFailedJobs));
             return window.sounds["FAILED"];
         } else if (hasMoreItems(currentlyUnstableJobs, previouslyUnstableJobs)) {
             mentionUnstableJobs(newItemsIn(currentlyUnstableJobs,previouslyUnstableJobs));
             return window.sounds["UNSTABLE"];
-        } else {
-            if (hasMoreItems(previouslyNonHealthyJobs, currentlyNonhealthyJobs)) {
-                mentionFixedJobs(newItemsIn(previouslyNonHealthyJobs,currentlyNonhealthyJobs))
-                return window.sounds["ONE_DOWN"];
-            }
+        } else if (hasMoreItems(previouslyNonHealthyJobs, currentlyNonhealthyJobs)) {
+            mentionFixedJobs(newItemsIn(previouslyNonHealthyJobs,currentlyNonhealthyJobs));
+            return window.sounds["ONE_DOWN"];
         }
-//		else {
-//			window.sounds[this.newBuildScreenStatus.status];
-//		}
-
-//
-//		var newStatusFailedJobs = toMap(newStatus.failedJobs);
-//		activeStatus.failedJobs.forEach(function(activeFailure) {
-//			if(!newStatusFailedJobs[activeFailure.name] ) {
-//				;
-//			}
-//		});
-//		if(does(newStatus).haveElementsNotIn(activeStatus))
     };
 
     var hasMoreItems = function(newFailures, activeFailures) {
@@ -176,7 +157,7 @@ ViewUpdater = function(updateStatus) {
     }
 
     var say = function(text) {
-        if('speechSynthesis' in window && window.sounds.talk){
+        if(iMaySpeak()){
             var msg = new SpeechSynthesisUtterance(text);
             window.speechSynthesis.speak(msg);
         }
@@ -193,5 +174,9 @@ ViewUpdater = function(updateStatus) {
         for (var i = 0; i < jobArray.length; ++i)
             map[jobArray[i].name] = jobArray[i];
         return map;
+    };
+    
+    var iMaySpeak = function() {
+        return 'speechSynthesis' in window && window.sounds.talk;
     };
 };

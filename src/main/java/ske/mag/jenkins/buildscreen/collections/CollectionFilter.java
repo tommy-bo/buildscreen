@@ -51,8 +51,8 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 
 	private class IncludeOnlyLatestBuildPredicate implements Predicate<AbstractBuild> {
 
-		public boolean apply(AbstractBuild input) {
-			return noneOfTheNextBuildsMatters(input.getNextBuild());
+		public boolean apply(AbstractBuild mayBeLatestBuild) {
+			return noneOfTheNextBuildsMatters(mayBeLatestBuild.getNextBuild()) && !mayBeLatestBuild.isBuilding();
 		}
 
 		private boolean noneOfTheNextBuildsMatters(AbstractBuild nextBuild) {
