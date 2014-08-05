@@ -23,7 +23,7 @@ import net.sf.json.JSONObject;
 @ExportedBean(defaultVisibility = 100)
 public class BuildScreenView extends ListView {
 
-	private final Integer pageRefreshInHours = 24;
+	private Integer pageRefreshInHours = 24;
 	private Integer pollingIntervalInSeconds;
 	private Integer rotationInSeconds;
 	private boolean playSounds;
@@ -64,6 +64,10 @@ public class BuildScreenView extends ListView {
 
 	public Integer getPageRefreshInSeconds() {
 		return pageRefreshInHours * 60 * 60;
+	}
+
+	public Integer getPageRefreshInHours() {
+		return pageRefreshInHours;
 	}
 
 	public Integer getPollingIntervalInSeconds() {
@@ -111,6 +115,7 @@ public class BuildScreenView extends ListView {
 		JSONObject json = req.getSubmittedForm();
 		this.pollingIntervalInSeconds = json.getInt("pollingIntervalInSeconds");
 		this.rotationInSeconds = json.getInt("rotationInSeconds");
+		this.pageRefreshInHours = json.getInt("pageRefreshInHours");
 		this.playSounds = json.getBoolean("playSounds");
         this.talk = json.getBoolean("talk");
 		setPages(req.getParameterValues("page"));

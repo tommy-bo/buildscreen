@@ -7,7 +7,6 @@
 				 xmlns:f="/lib/form"
 				 xmlns:i="jelly:fmt">
 	<l:layout norefresh="true" title="${it.displayName}">
-		<j:set var="status" value="${it.status}"/>
 		<l:header>
 			<meta http-equiv="refresh" content="${it.pageRefreshInSeconds}"/>
 			<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
@@ -23,7 +22,7 @@
 					meSpeak.loadConfig("${rootURL}/plugin/buildscreen/js/mespeak_config.json");
 					meSpeak.loadVoice("${rootURL}/plugin/buildscreen/js/en.json");
 					new Rotator("pageView", "visible").rotatePages(${it.rotationInSeconds});
-					new BuildScreenUpdater()
+					var updater = new BuildScreenUpdater()
 						.playOnSuccess("${rootURL}/plugin/buildscreen/media/SUCCESS.wav")
 						.playOnOneLessFailure("${rootURL}/plugin/buildscreen/media/SUCCESS_SINGLE.mp3")
 						.playOnUnstable("${rootURL}/plugin/buildscreen/media/UNSTABLE.mp3")
@@ -32,15 +31,15 @@
 						.goLoud(${it.playSounds})
 						.talkAboutBuilds(${it.talk})
 						.everySeconds(${it.pollingIntervalInSeconds});
-					new ViewUpdater(${status.toJson()}).updateStatus();
+					updater.update();
 				});
 			</script>
 		</l:header>
 		<l:main-panel>
-			<div id="mainDisplay" class="mainDisplay ${status.status}">
+			<div id="mainDisplay" class="mainDisplay">
 				<div class="head">
 					<div class="timeSinceStatusChange">
-						<h1 id="status"></h1>
+						<h1 id="status">Loading <img src="${imagesURL}/spinner.gif" alt="spinner"/></h1>
 					</div>
 					<div id="menu">
 						<a href="configure" title="Edit view">

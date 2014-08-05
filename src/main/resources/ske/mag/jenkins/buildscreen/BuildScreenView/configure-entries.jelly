@@ -16,7 +16,7 @@
 		}
 
 	</style>
-	<f:entry title="${%Jobs}">
+	<f:entry title="${%jobs}">
 		<j:forEach var="job" items="${app.items}">
 			<f:checkbox name="${job.name}" checked="${it.contains(job)}" />
 			${job.name}
@@ -24,32 +24,35 @@
 		</j:forEach>
 	</f:entry>
 
-	<f:optionalBlock name="useincluderegex" title="${%Use a regular expression to include jobs into the view}"
+	<f:optionalBlock name="useincluderegex" title="${%regExpInView}"
 									 checked="${it.includeRegex != null}" help="/help/view-config/includeregex.html">
-		<f:entry title="${%Regular expression}">
+		<f:entry title="${%regExp}">
 			<f:textbox name="includeRegex" field="includeRegex" />
 		</f:entry>
 	</f:optionalBlock>
 
-	<f:entry title="${%Polling interval}" field="pollingIntervalInSeconds">
+	<f:entry title="${%pollingInterval}" field="pollingIntervalInSeconds">
 		<f:number field="pollingIntervalInSeconds" default="30"/>
 	</f:entry>
-	<f:entry title="${%Rotation interval in green mode}" field="rotationInSeconds">
+	<f:entry title="${%rotationInterval}" field="rotationInSeconds">
 		<f:number field="rotationInSeconds" default="120"/>
 	</f:entry>
+	<f:entry title="${%reloadInterval}" field="pageRefreshInHours">
+		<f:number field="pageRefreshInHours" default="24"/>
+	</f:entry>
 
-	<f:entry title="${%Play sounds?}" field="playSounds">
+	<f:entry title="${%playSounds}?" field="playSounds">
 		<f:checkbox field="playSounds" default="true"/>
 	</f:entry>
-	<f:entry title="${%Talk about builds?}" field="talk">
+	<f:entry title="${%talk}?" field="talk">
     		<f:checkbox field="talk" default="true"/>
     	</f:entry>
 
-	<f:entry title="${%Loop through following pages}">
+	<f:entry title="${%loopPages}">
 		<br/>
-		<f:repeatable items="${it.pages}" add="${%Add page}" var="page">
+		<f:repeatable items="${it.pages}" add="${%addPage}" var="page">
 			<table>
-				<f:entry title="${%Page:}">
+				<f:entry title="${%page}:">
 					<table style="width: 100%;">
 						<tr>
 							<td>
