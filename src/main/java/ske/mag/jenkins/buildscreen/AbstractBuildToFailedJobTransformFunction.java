@@ -24,6 +24,7 @@ public class AbstractBuildToFailedJobTransformFunction implements Function<Abstr
 		final String fullProjectName = build.getProject().getFullName();
 		FailedJob failedJob = new FailedJob();
 		failedJob.setName(fullProjectName + " (" + build.getDisplayName() + ")");
+		failedJob.setDescription(build.getDescription());
 		failedJob.setUrl(jenkins.getRootUrl() + build.getUrl());
 		failedJob.setCulpritIds(join(transform(build.getCulprits(), getId()).iterator(), ", "));
 		failedJob.setCulprits(join(build.getCulprits(), ", "));

@@ -17,6 +17,7 @@ public class FailedJob {
 	private Status buildStatus;
 	private Date lastSuccessfulBuildTime;
 	private String culpritIds;
+	private String description;
 
 	@Exported
 	public String getName() {
@@ -111,6 +112,15 @@ public class FailedJob {
 	public void setBuildStatus(Status buildStatus) {
 		this.buildStatus = buildStatus;
 	}
+
+	@Exported
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 	
 	public static Builder ny() {
 		return new Builder();
@@ -151,6 +161,11 @@ public class FailedJob {
 		
 		public Builder buildStatus(Status status) {
 			template.setBuildStatus(status);
+			return this;
+		}
+		
+		public Builder description(String description) {
+			template.setDescription(description);
 			return this;
 		}
 		

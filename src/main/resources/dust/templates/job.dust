@@ -17,6 +17,9 @@
 			</h2>
 		</a>
 		<div class="lastSuccess">Since {lastSuccessfulBuildText}</div>
+		{?description}
+			<div class="description">{description}</div>
+		{/description}
 		{?culprits}
 			<div class="culprits">{culprits}</div>
 		{/culprits}
