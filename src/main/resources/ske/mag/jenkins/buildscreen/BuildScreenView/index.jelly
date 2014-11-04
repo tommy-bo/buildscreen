@@ -11,8 +11,8 @@
 			<meta http-equiv="refresh" content="${it.pageRefreshInSeconds}"/>
 			<link rel="stylesheet" type="text/css" href="${rootURL}/plugin/buildscreen/css/main.css" />
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/dust-full-1.2.3.js"></script>
-			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/templates/failedBuilds.dust"></script>
-			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/templates/job.dust"></script>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/templates/failedBuilds.js"></script>
+			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/templates/job.js"></script>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/buzz.js"/>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/rotator.js"/>
 			<script type="text/javascript" src="${rootURL}/plugin/buildscreen/js/buildScreenUpdater.js"/>

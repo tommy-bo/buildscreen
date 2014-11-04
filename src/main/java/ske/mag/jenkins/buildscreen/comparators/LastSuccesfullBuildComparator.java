@@ -10,14 +10,17 @@ public class LastSuccesfullBuildComparator implements Comparator<FailedJob> {
 
 	public int compare(FailedJob firstJob, FailedJob secondJob) {
 		final Date firstJobBuildTime = firstJob.getLastSuccessfulBuildTime();
-		final Date SecondJobBuildTime = secondJob.getLastSuccessfulBuildTime();
-		if (Objects.equal(firstJobBuildTime, SecondJobBuildTime)) {
+		final Date secondJobBuildTime = secondJob.getLastSuccessfulBuildTime();
+		if (Objects.equal(firstJobBuildTime, secondJobBuildTime)) {
 			return SAME;
 		}
-		if (firstJobBuildTime == null) {
+		if (secondJobBuildTime == null) {
 			return FIRST_JOB_FIRST;
 		}
-		return firstJobBuildTime.compareTo(SecondJobBuildTime);
+		if (firstJobBuildTime == null) {
+			return SECOND_JOB_FIRST;
+		}
+		return firstJobBuildTime.compareTo(secondJobBuildTime);
 	}
 
 }
