@@ -10,12 +10,16 @@ import java.util.Collection;
 import static com.google.common.collect.Collections2.*;
 import java.util.AbstractCollection;
 import java.util.Iterator;
+import hudson.model.AbstractProject;
+import hudson.model.TopLevelItem;
 
 public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 	private final Collection<AbstractBuild> backingCollection;
-	private final static Function<Run, AbstractBuild> castRunToAbstractBuild = new Function<Run, AbstractBuild>(){
-			public AbstractBuild apply(Run input) {
-				return AbstractBuild.class.cast(input);
+	private final static Function<TopLevelItem, AbstractBuild> getLastBuildFromItem = new Function<TopLevelItem, AbstractBuild>(){
+            @Override
+			public AbstractBuild apply(TopLevelItem input) {
+                Run lastCompletedBuild = input instanceof AbstractProject ? ((AbstractProject) input).getLastCompletedBuild() : null;
+                return AbstractBuild.class.cast(lastCompletedBuild);
 			}
 		};
 
@@ -23,20 +27,16 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 		this.backingCollection = backingCollection;
 	}
 
-	public static CollectionFilter filter(Collection<Run> collectionToFilter) {
-		return new CollectionFilter(transform(collectionToFilter, castRunToAbstractBuild));
+	public static CollectionFilter filter(Collection<TopLevelItem> collectionToFilter) {
+		return new CollectionFilter(transform(collectionToFilter, getLastBuildFromItem));
 	}
 
 	public CollectionFilter byResult(Result result) {
 		return new CollectionFilter(Collections2.filter(backingCollection, new IncludeResultPredicate(result)));
 	}
 
-	public CollectionFilter byLastCompletedBuilds() {
-		return new CollectionFilter(Collections2.filter(backingCollection, new IncludeOnlyLatestBuildPredicate()));
-	}
-
-	public CollectionFilter byRootBuilds() {
-		return new CollectionFilter(Collections2.filter(backingCollection, new IncludeOnlyRootBuildsPredicate()));
+	public CollectionFilter onlyEnabledJobs() {
+		return new CollectionFilter(Collections2.filter(backingCollection, new OnlyEnabledJobsPredicate()));
 	}
 
 	@Override
@@ -49,22 +49,14 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 		return backingCollection.size();
 	}
 
-	private class IncludeOnlyLatestBuildPredicate implements Predicate<AbstractBuild> {
+	private class OnlyEnabledJobsPredicate implements Predicate<AbstractBuild> {
 
-		public boolean apply(AbstractBuild mayBeLatestBuild) {
-			return noneOfTheNextBuildsMatters(mayBeLatestBuild.getNextBuild()) && !mayBeLatestBuild.isBuilding();
-		}
-
-		private boolean noneOfTheNextBuildsMatters(AbstractBuild nextBuild) {
-			if(nextBuild == null || nextBuild.isBuilding())
-				return true;
-			if(nextBuild.getResult().isWorseOrEqualTo(Result.ABORTED)) {
-				return noneOfTheNextBuildsMatters(nextBuild.getNextBuild());
-			}
-			return false;
-		}
-	}
-
+        @Override
+        public boolean apply(AbstractBuild input) {
+            return ! input.getProject().isDisabled();
+        }
+    }
+    
 	private class IncludeResultPredicate implements Predicate<AbstractBuild> {
 		private final Result includeResult;
 
@@ -74,13 +66,6 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 
 		public boolean apply(AbstractBuild input) {
 			return includeResult.equals(input.getResult());
-		}
-	}
-
-	private class IncludeOnlyRootBuildsPredicate implements Predicate<AbstractBuild> {
-
-		public boolean apply(AbstractBuild input) {
-			return input.getRootBuild() == input;
 		}
 	}
 }

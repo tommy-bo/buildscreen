@@ -16,20 +16,10 @@
 		}
 
 	</style>
-	<f:entry title="${%jobs}">
-		<j:forEach var="job" items="${app.items}">
-			<f:checkbox name="${job.name}" checked="${it.contains(job)}" />
-			${job.name}
-			<br/>
-		</j:forEach>
+    
+	<f:entry name="basedOnView" title="${%basedOnView}" field="basedOnView">
+		<f:select name="basedOnView" />
 	</f:entry>
-
-	<f:optionalBlock name="useincluderegex" title="${%regExpInView}"
-									 checked="${it.includeRegex != null}" help="/help/view-config/includeregex.html">
-		<f:entry title="${%regExp}">
-			<f:textbox name="includeRegex" field="includeRegex" />
-		</f:entry>
-	</f:optionalBlock>
 
 	<f:entry title="${%pollingInterval}" field="pollingIntervalInSeconds">
 		<f:number field="pollingIntervalInSeconds" default="30"/>
