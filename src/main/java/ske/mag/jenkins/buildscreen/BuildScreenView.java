@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import com.google.common.base.Optional;
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -153,16 +154,14 @@ public class BuildScreenView extends View {
     public Collection<TopLevelItem> getItems() {
         View wrappedView = getWrappedView();
         if (wrappedView== null)
-        	return new ArrayList<TopLevelItem>();
+        	return Collections.emptyList();
 		return wrappedView.getItems();
     }
 
     @Override
     public boolean contains(TopLevelItem item) {
         View wrappedView = getWrappedView();
-        if (wrappedView== null)
-        	return false;
-		return wrappedView.contains(item);
+		return wrappedView != null && wrappedView.contains(item);
     }
 
     @Override
