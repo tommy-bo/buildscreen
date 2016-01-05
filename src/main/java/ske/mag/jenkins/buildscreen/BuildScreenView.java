@@ -151,17 +151,27 @@ public class BuildScreenView extends View {
 
     @Override
     public Collection<TopLevelItem> getItems() {
-        return getWrappedView().getItems();
+        View wrappedView = getWrappedView();
+        if (wrappedView== null)
+        	return new ArrayList<TopLevelItem>();
+		return wrappedView.getItems();
     }
 
     @Override
     public boolean contains(TopLevelItem item) {
-        return getWrappedView().contains(item);
+        View wrappedView = getWrappedView();
+        if (wrappedView== null)
+        	return false;
+		return wrappedView.contains(item);
     }
 
     @Override
     public Item doCreateItem(StaplerRequest request, StaplerResponse response) throws IOException, ServletException {
-        return getWrappedView().doCreateItem(request, response);
+        View wrappedView = getWrappedView();
+        if (wrappedView== null){
+        	return null;
+        }
+		return wrappedView.doCreateItem(request, response);
     }
 	
 	@Extension
