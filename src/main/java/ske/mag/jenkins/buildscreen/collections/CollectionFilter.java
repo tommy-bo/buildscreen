@@ -10,12 +10,14 @@ import java.util.Collection;
 import static com.google.common.collect.Collections2.*;
 import java.util.AbstractCollection;
 import java.util.Iterator;
+import com.google.common.annotations.VisibleForTesting;
 import hudson.model.AbstractProject;
 import hudson.model.TopLevelItem;
 
 public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 	private final Collection<AbstractBuild> backingCollection;
-	private final static Function<TopLevelItem, AbstractBuild> getLastBuildFromItem = new Function<TopLevelItem, AbstractBuild>(){
+    @VisibleForTesting
+	final static Function<TopLevelItem, AbstractBuild> getLastBuildFromItem = new Function<TopLevelItem, AbstractBuild>(){
             @Override
 			public AbstractBuild apply(TopLevelItem input) {
                 Run lastCompletedBuild = input instanceof AbstractProject ? ((AbstractProject) input).getLastCompletedBuild() : null;
@@ -28,7 +30,7 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 	}
 
 	public static CollectionFilter filter(Collection<TopLevelItem> collectionToFilter) {
-		return new CollectionFilter(transform(collectionToFilter, getLastBuildFromItem));
+		return new CollectionFilter(Collections2.filter(transform(collectionToFilter, getLastBuildFromItem), new NoNullObjectsPredicate()));
 	}
 
 	public CollectionFilter byResult(Result result) {
@@ -49,6 +51,14 @@ public class CollectionFilter extends AbstractCollection<AbstractBuild>{
 		return backingCollection.size();
 	}
 
+	private static class NoNullObjectsPredicate implements Predicate<AbstractBuild> {
+
+        @Override
+        public boolean apply(AbstractBuild input) {
+            return input != null;
+        }
+    }
+    
 	private class OnlyEnabledJobsPredicate implements Predicate<AbstractBuild> {
 
         @Override
