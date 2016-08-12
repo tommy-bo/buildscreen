@@ -2,3 +2,8 @@
 /work/
 /nbactions.xml
 /src/blueprint/
+/nbproject/
+/nb-configuration.xml
+/src/main/webapp/js/templates/failedBuilds.js
+/src/main/webapp/js/templates/job.js
+/src/main/webapp/scss/main.css

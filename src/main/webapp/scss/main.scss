@@ -1,7 +1,8 @@
 $failBg: #EF2929;
+$failContainerBg: rgba(255,0,0,0.7);
 $unstableBg: #F57D1F;//#FCD116;
 $stableBg: #1BD130;
-$shade: rgba(0, 0, 0, 0.1);
+$shade: rgba(0, 0, 0, 0.5);
 $disconectedBg: #AAAAAA;
 $browserPrefixes: "-webkit-", "-mozilla-", "-o-", "-ms-", "";
 
@@ -114,14 +115,9 @@ h1 {
 }
 
 h2 {
-	margin: 0;
-	font-size: 35pt;
-	font-weight: normal;
-	background-color: $shade;
-	width: 60%;
-	margin: 0 auto;
-	border-radius: 1em;
-	overflow: hidden;
+    line-height: 1.3em;
+    margin: .5em 0 0 0;
+    padding: .2em;
 }
 
 .head div {
@@ -151,11 +147,20 @@ h2 {
 		list-style: none inside none;
 		padding: 0;
 		margin: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
 	}
 
 	li {
-		padding-top: 0.2em;
-		position: relative;
+        padding: 0.5em;
+        position: relative;
+        flex-grow: 1;
+        background-color: $failContainerBg;
+        margin: .1em;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 1px 1px 3px $shade;
 	}
 
 	a {
